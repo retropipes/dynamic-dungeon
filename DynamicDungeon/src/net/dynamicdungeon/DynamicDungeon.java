@@ -29,6 +29,7 @@ public class DynamicDungeon extends JFrame implements KeyListener {
 	this.screen = new StartScreen();
 	this.addKeyListener(this);
 	this.repaint();
+	Music.play();
     }
 
     @Override
