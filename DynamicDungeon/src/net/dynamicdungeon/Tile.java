@@ -14,7 +14,7 @@ public class Tile extends BufferedImage {
 	    "A stone staircase that goes down.");
     public static final Tile STAIRS_UP = new Tile("/assets/images/terrain/up.png",
 	    "A stone staircase that goes up.");
-    public static final Tile FUNGUS = new Tile("/assets/images/monsters/mushroom.png", "A fungus.");
+    public static final Tile FUNGUS = new Tile("/assets/images/monsters/fungus.png", "A fungus.");
     public static final Tile BAT = new Tile("/assets/images/monsters/bat.png", "A bat.");
     public static final Tile ZOMBIE = new Tile("/assets/images/monsters/zombie.png", "A zombie.");
     public static final Tile GOBLIN = new Tile("/assets/images/monsters/goblin.png", "A goblin.");

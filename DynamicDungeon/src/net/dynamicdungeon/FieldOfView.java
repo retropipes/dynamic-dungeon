@@ -23,7 +23,7 @@ public class FieldOfView {
 	for (int x = 0; x < world.width(); x++) {
 	    for (int y = 0; y < world.height(); y++) {
 		for (int z = 0; z < world.depth(); z++) {
-		    this.tiles[x][y][z] = Tile.BOUNDS;
+		    this.tiles[x][y][z] = Tile.DARKNESS;
 		}
 	    }
 	}
