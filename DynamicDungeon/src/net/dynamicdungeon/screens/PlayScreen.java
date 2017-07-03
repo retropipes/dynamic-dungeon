@@ -23,6 +23,7 @@ public class PlayScreen implements Screen {
     private final List<String> messages;
     private final FieldOfView fov;
     private Screen subscreen;
+    private boolean firstTimeFlag;
 
     public PlayScreen() {
 	this.screenWidth = 30;
@@ -33,6 +34,19 @@ public class PlayScreen implements Screen {
 	final StuffFactory factory = new StuffFactory(this.world);
 	this.createCreatures(factory);
 	this.createItems(factory);
+	this.firstTimeFlag = false;
+    }
+
+    public PlayScreen(final boolean first) {
+	this.screenWidth = 30;
+	this.screenHeight = 22;
+	this.messages = new ArrayList<>();
+	this.createWorld();
+	this.fov = new FieldOfView(this.world);
+	final StuffFactory factory = new StuffFactory(this.world);
+	this.createCreatures(factory);
+	this.createItems(factory);
+	this.firstTimeFlag = first;
     }
 
     private void createCreatures(final StuffFactory factory) {
@@ -84,6 +98,10 @@ public class PlayScreen implements Screen {
 
     @Override
     public void displayOutput(final GuiPanel terminal, MessagePanel messages) {
+	if (this.firstTimeFlag) {
+	    messages.clear();
+	    this.firstTimeFlag = false;
+	}
 	final int left = this.getScrollX();
 	final int top = this.getScrollY();
 	this.displayTiles(terminal, left, top);

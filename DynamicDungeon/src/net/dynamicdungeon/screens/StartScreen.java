@@ -11,16 +11,13 @@ public class StartScreen implements Screen {
     public void displayOutput(final GuiPanel terminal, MessagePanel messages) {
 	messages.clear();
 	messages.write("Dynamic Dungeon");
-	messages.write("-- press [enter] or click to start --");
+	messages.write("-- press [enter] to start --");
     }
 
     @Override
     public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
 	if (key != null) {
-	    return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen() : this;
-	}
-	if (mouse != null) {
-	    return new PlayScreen();
+	    return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen(true) : this;
 	}
 	return this;
     }
