@@ -237,6 +237,7 @@ public class PlayScreen implements Screen {
 	    case '>':
 		this.player.moveBy(0, 0, 1);
 		break;
+	    case '/':
 	    case '?':
 		this.subscreen = new HelpScreen();
 		break;
