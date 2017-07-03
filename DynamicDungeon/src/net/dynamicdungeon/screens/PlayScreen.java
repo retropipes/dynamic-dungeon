@@ -217,6 +217,7 @@ public class PlayScreen implements Screen {
 	    case ',':
 		this.player.pickup();
 		break;
+	    case '[':
 	    case '<':
 		if (this.userIsTryingToExit()) {
 		    return this.userExits();
@@ -224,6 +225,7 @@ public class PlayScreen implements Screen {
 		    this.player.moveBy(0, 0, -1);
 		}
 		break;
+	    case ']':
 	    case '>':
 		this.player.moveBy(0, 0, 1);
 		break;
