@@ -146,7 +146,7 @@ public class PlayScreen implements Screen {
     public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
 	final int level = this.player.level();
 	if (this.subscreen != null) {
-	    this.subscreen = this.subscreen.respondToUserInput(key, null);
+	    this.subscreen = this.subscreen.respondToUserInput(key, mouse);
 	} else {
 	    if (key != null) {
 		switch (key.getKeyCode()) {

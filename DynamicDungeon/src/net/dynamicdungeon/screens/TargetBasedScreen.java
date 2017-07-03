@@ -82,8 +82,17 @@ public abstract class TargetBasedScreen implements Screen {
 	    }
 	}
 	if (mouse != null) {
-	    this.x = mouse.getX() / 32;
-	    this.y = mouse.getY() / 32;
+	    this.x = (mouse.getX() / 32) - this.sx - px;
+	    this.y = (mouse.getY() / 32) - this.sy - py;
+	    if (!this.isAcceptable(this.player.x + this.x, this.player.y + this.y)) {
+		this.x = px;
+		this.y = py;
+		return this;
+	    } else {
+		this.selectWorldCoordinate(this.player.x + this.x, this.player.y + this.y, this.sx + this.x,
+			this.sy + this.y);
+		return null;
+	    }
 	}
 	if (!this.isAcceptable(this.player.x + this.x, this.player.y + this.y)) {
 	    this.x = px;

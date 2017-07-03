@@ -30,7 +30,7 @@ public class DynamicDungeon extends JFrame implements KeyListener, MouseListener
 	this.pack();
 	this.screen = new StartScreen();
 	this.addKeyListener(this);
-	this.addMouseListener(this);
+	this.getContentPane().addMouseListener(this);
 	this.repaint();
 	Music.play();
     }
@@ -59,12 +59,6 @@ public class DynamicDungeon extends JFrame implements KeyListener, MouseListener
     public void keyTyped(final KeyEvent e) {
     }
 
-    public static void main(final String[] args) {
-	final DynamicDungeon app = new DynamicDungeon();
-	app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	app.setVisible(true);
-    }
-
     @Override
     public void mouseClicked(MouseEvent e) {
 	this.screen = this.screen.respondToUserInput(null, e);
@@ -90,5 +84,11 @@ public class DynamicDungeon extends JFrame implements KeyListener, MouseListener
     @Override
     public void mouseExited(MouseEvent e) {
 	// Do nothing
+    }
+
+    public static void main(final String[] args) {
+	final DynamicDungeon app = new DynamicDungeon();
+	app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	app.setVisible(true);
     }
 }
