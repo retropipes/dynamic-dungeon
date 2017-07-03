@@ -1,6 +1,7 @@
 package net.dynamicdungeon.screens;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,105 +143,107 @@ public class PlayScreen implements Screen {
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key) {
+    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
 	final int level = this.player.level();
 	if (this.subscreen != null) {
-	    this.subscreen = this.subscreen.respondToUserInput(key);
+	    this.subscreen = this.subscreen.respondToUserInput(key, null);
 	} else {
-	    switch (key.getKeyCode()) {
-	    case KeyEvent.VK_LEFT:
-	    case KeyEvent.VK_H:
-	    case KeyEvent.VK_NUMPAD4:
-		this.player.moveBy(-1, 0, 0);
-		break;
-	    case KeyEvent.VK_RIGHT:
-	    case KeyEvent.VK_L:
-	    case KeyEvent.VK_NUMPAD6:
-		this.player.moveBy(1, 0, 0);
-		break;
-	    case KeyEvent.VK_UP:
-	    case KeyEvent.VK_K:
-	    case KeyEvent.VK_NUMPAD8:
-		this.player.moveBy(0, -1, 0);
-		break;
-	    case KeyEvent.VK_DOWN:
-	    case KeyEvent.VK_J:
-	    case KeyEvent.VK_NUMPAD2:
-		this.player.moveBy(0, 1, 0);
-		break;
-	    case KeyEvent.VK_Y:
-	    case KeyEvent.VK_NUMPAD7:
-		this.player.moveBy(-1, -1, 0);
-		break;
-	    case KeyEvent.VK_U:
-	    case KeyEvent.VK_NUMPAD9:
-		this.player.moveBy(1, -1, 0);
-		break;
-	    case KeyEvent.VK_B:
-	    case KeyEvent.VK_NUMPAD1:
-		this.player.moveBy(-1, 1, 0);
-		break;
-	    case KeyEvent.VK_N:
-	    case KeyEvent.VK_NUMPAD3:
-		this.player.moveBy(1, 1, 0);
-		break;
-	    case KeyEvent.VK_D:
-		this.subscreen = new DropScreen(this.player);
-		break;
-	    case KeyEvent.VK_E:
-		this.subscreen = new EatScreen(this.player);
-		break;
-	    case KeyEvent.VK_W:
-		this.subscreen = new EquipScreen(this.player);
-		break;
-	    case KeyEvent.VK_X:
-		this.subscreen = new ExamineScreen(this.player);
-		break;
-	    case KeyEvent.VK_SEMICOLON:
-		this.subscreen = new LookScreen(this.player, "Looking", this.player.x - this.getScrollX(),
-			this.player.y - this.getScrollY());
-		break;
-	    case KeyEvent.VK_T:
-		this.subscreen = new ThrowScreen(this.player, this.player.x - this.getScrollX(),
-			this.player.y - this.getScrollY());
-		break;
-	    case KeyEvent.VK_F:
-		if (this.player.weapon() == null || this.player.weapon().rangedAttackValue() == 0) {
-		    this.player.notify("You don't have a ranged weapon equiped.");
-		} else {
-		    this.subscreen = new FireWeaponScreen(this.player, this.player.x - this.getScrollX(),
+	    if (key != null) {
+		switch (key.getKeyCode()) {
+		case KeyEvent.VK_LEFT:
+		case KeyEvent.VK_H:
+		case KeyEvent.VK_NUMPAD4:
+		    this.player.moveBy(-1, 0, 0);
+		    break;
+		case KeyEvent.VK_RIGHT:
+		case KeyEvent.VK_L:
+		case KeyEvent.VK_NUMPAD6:
+		    this.player.moveBy(1, 0, 0);
+		    break;
+		case KeyEvent.VK_UP:
+		case KeyEvent.VK_K:
+		case KeyEvent.VK_NUMPAD8:
+		    this.player.moveBy(0, -1, 0);
+		    break;
+		case KeyEvent.VK_DOWN:
+		case KeyEvent.VK_J:
+		case KeyEvent.VK_NUMPAD2:
+		    this.player.moveBy(0, 1, 0);
+		    break;
+		case KeyEvent.VK_Y:
+		case KeyEvent.VK_NUMPAD7:
+		    this.player.moveBy(-1, -1, 0);
+		    break;
+		case KeyEvent.VK_U:
+		case KeyEvent.VK_NUMPAD9:
+		    this.player.moveBy(1, -1, 0);
+		    break;
+		case KeyEvent.VK_B:
+		case KeyEvent.VK_NUMPAD1:
+		    this.player.moveBy(-1, 1, 0);
+		    break;
+		case KeyEvent.VK_N:
+		case KeyEvent.VK_NUMPAD3:
+		    this.player.moveBy(1, 1, 0);
+		    break;
+		case KeyEvent.VK_D:
+		    this.subscreen = new DropScreen(this.player);
+		    break;
+		case KeyEvent.VK_E:
+		    this.subscreen = new EatScreen(this.player);
+		    break;
+		case KeyEvent.VK_W:
+		    this.subscreen = new EquipScreen(this.player);
+		    break;
+		case KeyEvent.VK_X:
+		    this.subscreen = new ExamineScreen(this.player);
+		    break;
+		case KeyEvent.VK_SEMICOLON:
+		    this.subscreen = new LookScreen(this.player, "Looking", this.player.x - this.getScrollX(),
 			    this.player.y - this.getScrollY());
+		    break;
+		case KeyEvent.VK_T:
+		    this.subscreen = new ThrowScreen(this.player, this.player.x - this.getScrollX(),
+			    this.player.y - this.getScrollY());
+		    break;
+		case KeyEvent.VK_F:
+		    if (this.player.weapon() == null || this.player.weapon().rangedAttackValue() == 0) {
+			this.player.notify("You don't have a ranged weapon equiped.");
+		    } else {
+			this.subscreen = new FireWeaponScreen(this.player, this.player.x - this.getScrollX(),
+				this.player.y - this.getScrollY());
+		    }
+		    break;
+		case KeyEvent.VK_Q:
+		    this.subscreen = new QuaffScreen(this.player);
+		    break;
+		case KeyEvent.VK_R:
+		    this.subscreen = new ReadScreen(this.player, this.player.x - this.getScrollX(),
+			    this.player.y - this.getScrollY());
+		    break;
 		}
-		break;
-	    case KeyEvent.VK_Q:
-		this.subscreen = new QuaffScreen(this.player);
-		break;
-	    case KeyEvent.VK_R:
-		this.subscreen = new ReadScreen(this.player, this.player.x - this.getScrollX(),
-			this.player.y - this.getScrollY());
-		break;
-	    }
-	    switch (key.getKeyChar()) {
-	    case 'g':
-	    case ',':
-		this.player.pickup();
-		break;
-	    case '[':
-	    case '<':
-		if (this.userIsTryingToExit()) {
-		    return this.userExits();
-		} else {
-		    this.player.moveBy(0, 0, -1);
+		switch (key.getKeyChar()) {
+		case 'g':
+		case ',':
+		    this.player.pickup();
+		    break;
+		case '[':
+		case '<':
+		    if (this.userIsTryingToExit()) {
+			return this.userExits();
+		    } else {
+			this.player.moveBy(0, 0, -1);
+		    }
+		    break;
+		case ']':
+		case '>':
+		    this.player.moveBy(0, 0, 1);
+		    break;
+		case '/':
+		case '?':
+		    this.subscreen = new HelpScreen();
+		    break;
 		}
-		break;
-	    case ']':
-	    case '>':
-		this.player.moveBy(0, 0, 1);
-		break;
-	    case '/':
-	    case '?':
-		this.subscreen = new HelpScreen();
-		break;
 	    }
 	}
 	if (this.player.level() > level) {

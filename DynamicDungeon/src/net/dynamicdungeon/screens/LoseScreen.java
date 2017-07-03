@@ -1,6 +1,7 @@
 package net.dynamicdungeon.screens;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.Sound;
@@ -20,11 +21,17 @@ public class LoseScreen implements Screen {
 	messages.clear();
 	messages.write("R.I.P.");
 	messages.write(this.player.causeOfDeath());
-	messages.write("-- press [enter] to restart --");
+	messages.write("-- press [enter] or click to restart --");
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key) {
-	return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen() : this;
+    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
+	if (key != null) {
+	    return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen() : this;
+	}
+	if (mouse != null) {
+	    return new PlayScreen();
+	}
+	return this;
     }
 }

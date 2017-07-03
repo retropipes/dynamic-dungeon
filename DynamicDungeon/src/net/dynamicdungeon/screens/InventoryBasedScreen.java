@@ -1,6 +1,7 @@
 package net.dynamicdungeon.screens;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import net.dynamicdungeon.Creature;
@@ -50,14 +51,18 @@ public abstract class InventoryBasedScreen implements Screen {
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key) {
-	final char c = key.getKeyChar();
-	final Item[] items = this.player.inventory().getItems();
-	if (this.letters.indexOf(c) > -1 && items.length > this.letters.indexOf(c)
-		&& items[this.letters.indexOf(c)] != null && this.isAcceptable(items[this.letters.indexOf(c)])) {
-	    return this.use(items[this.letters.indexOf(c)]);
-	} else if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
-	    return null;
+    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
+	if (key != null) {
+	    final char c = key.getKeyChar();
+	    final Item[] items = this.player.inventory().getItems();
+	    if (this.letters.indexOf(c) > -1 && items.length > this.letters.indexOf(c)
+		    && items[this.letters.indexOf(c)] != null && this.isAcceptable(items[this.letters.indexOf(c)])) {
+		return this.use(items[this.letters.indexOf(c)]);
+	    } else if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
+		return null;
+	    } else {
+		return this;
+	    }
 	} else {
 	    return this;
 	}

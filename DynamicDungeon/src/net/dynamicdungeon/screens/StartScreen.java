@@ -1,6 +1,7 @@
 package net.dynamicdungeon.screens;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import net.dynamicdungeon.panels.GuiPanel;
 import net.dynamicdungeon.panels.MessagePanel;
@@ -10,11 +11,17 @@ public class StartScreen implements Screen {
     public void displayOutput(final GuiPanel terminal, MessagePanel messages) {
 	messages.clear();
 	messages.write("Dynamic Dungeon");
-	messages.write("-- press [enter] to start --");
+	messages.write("-- press [enter] or click to start --");
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key) {
-	return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen() : this;
+    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
+	if (key != null) {
+	    return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen() : this;
+	}
+	if (mouse != null) {
+	    return new PlayScreen();
+	}
+	return this;
     }
 }

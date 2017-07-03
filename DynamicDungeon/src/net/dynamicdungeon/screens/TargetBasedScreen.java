@@ -1,6 +1,7 @@
 package net.dynamicdungeon.screens;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.panels.GuiPanel;
@@ -27,48 +28,62 @@ public abstract class TargetBasedScreen implements Screen {
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key) {
+    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
 	final int px = this.x;
 	final int py = this.y;
-	switch (key.getKeyCode()) {
-	case KeyEvent.VK_LEFT:
-	case KeyEvent.VK_H:
-	    this.x--;
-	    break;
-	case KeyEvent.VK_RIGHT:
-	case KeyEvent.VK_L:
-	    this.x++;
-	    break;
-	case KeyEvent.VK_UP:
-	case KeyEvent.VK_J:
-	    this.y--;
-	    break;
-	case KeyEvent.VK_DOWN:
-	case KeyEvent.VK_K:
-	    this.y++;
-	    break;
-	case KeyEvent.VK_Y:
-	    this.x--;
-	    this.y--;
-	    break;
-	case KeyEvent.VK_U:
-	    this.x++;
-	    this.y--;
-	    break;
-	case KeyEvent.VK_B:
-	    this.x--;
-	    this.y++;
-	    break;
-	case KeyEvent.VK_N:
-	    this.x++;
-	    this.y++;
-	    break;
-	case KeyEvent.VK_ENTER:
-	    this.selectWorldCoordinate(this.player.x + this.x, this.player.y + this.y, this.sx + this.x,
-		    this.sy + this.y);
-	    return null;
-	case KeyEvent.VK_ESCAPE:
-	    return null;
+	if (key != null) {
+	    switch (key.getKeyCode()) {
+	    case KeyEvent.VK_LEFT:
+	    case KeyEvent.VK_H:
+	    case KeyEvent.VK_NUMPAD4:
+		this.x--;
+		break;
+	    case KeyEvent.VK_RIGHT:
+	    case KeyEvent.VK_L:
+	    case KeyEvent.VK_NUMPAD6:
+		this.x++;
+		break;
+	    case KeyEvent.VK_UP:
+	    case KeyEvent.VK_J:
+	    case KeyEvent.VK_NUMPAD8:
+		this.y--;
+		break;
+	    case KeyEvent.VK_DOWN:
+	    case KeyEvent.VK_K:
+	    case KeyEvent.VK_NUMPAD2:
+		this.y++;
+		break;
+	    case KeyEvent.VK_Y:
+	    case KeyEvent.VK_NUMPAD7:
+		this.x--;
+		this.y--;
+		break;
+	    case KeyEvent.VK_NUMPAD9:
+	    case KeyEvent.VK_U:
+		this.x++;
+		this.y--;
+		break;
+	    case KeyEvent.VK_NUMPAD1:
+	    case KeyEvent.VK_B:
+		this.x--;
+		this.y++;
+		break;
+	    case KeyEvent.VK_NUMPAD3:
+	    case KeyEvent.VK_N:
+		this.x++;
+		this.y++;
+		break;
+	    case KeyEvent.VK_ENTER:
+		this.selectWorldCoordinate(this.player.x + this.x, this.player.y + this.y, this.sx + this.x,
+			this.sy + this.y);
+		return null;
+	    case KeyEvent.VK_ESCAPE:
+		return null;
+	    }
+	}
+	if (mouse != null) {
+	    this.x = mouse.getX() / 32;
+	    this.y = mouse.getY() / 32;
 	}
 	if (!this.isAcceptable(this.player.x + this.x, this.player.y + this.y)) {
 	    this.x = px;

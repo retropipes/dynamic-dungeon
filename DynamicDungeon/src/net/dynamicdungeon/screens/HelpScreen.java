@@ -1,6 +1,7 @@
 package net.dynamicdungeon.screens;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import net.dynamicdungeon.panels.GuiPanel;
 import net.dynamicdungeon.panels.MessagePanel;
@@ -25,7 +26,7 @@ public class HelpScreen implements Screen {
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key) {
+    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
 	return null;
     }
 }

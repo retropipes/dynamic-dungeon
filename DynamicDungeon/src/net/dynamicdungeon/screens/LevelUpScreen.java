@@ -1,6 +1,7 @@
 package net.dynamicdungeon.screens;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import net.dynamicdungeon.Creature;
@@ -30,19 +31,23 @@ public class LevelUpScreen implements Screen {
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key) {
-	final List<String> options = this.controller.getLevelUpOptions();
-	String chars = "";
-	for (int i = 0; i < options.size(); i++) {
-	    chars = chars + Integer.toString(i + 1);
-	}
-	final int i = chars.indexOf(key.getKeyChar());
-	if (i < 0) {
-	    return this;
-	}
-	this.controller.getLevelUpOption(options.get(i)).invoke(this.player);
-	if (--this.picks < 1) {
-	    return null;
+    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
+	if (key != null) {
+	    final List<String> options = this.controller.getLevelUpOptions();
+	    String chars = "";
+	    for (int i = 0; i < options.size(); i++) {
+		chars = chars + Integer.toString(i + 1);
+	    }
+	    final int i = chars.indexOf(key.getKeyChar());
+	    if (i < 0) {
+		return this;
+	    }
+	    this.controller.getLevelUpOption(options.get(i)).invoke(this.player);
+	    if (--this.picks < 1) {
+		return null;
+	    } else {
+		return this;
+	    }
 	} else {
 	    return this;
 	}
