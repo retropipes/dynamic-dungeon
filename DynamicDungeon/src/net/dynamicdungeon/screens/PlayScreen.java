@@ -25,8 +25,8 @@ public class PlayScreen implements Screen {
     private Screen subscreen;
 
     public PlayScreen() {
-	this.screenWidth = 39;
-	this.screenHeight = 23;
+	this.screenWidth = 30;
+	this.screenHeight = 22;
 	this.messages = new ArrayList<>();
 	this.createWorld();
 	this.fov = new FieldOfView(this.world);
