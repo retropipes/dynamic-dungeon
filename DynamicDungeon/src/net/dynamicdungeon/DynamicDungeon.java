@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 import net.dynamicdungeon.panels.GuiPanel;
 import net.dynamicdungeon.panels.MessagePanel;
@@ -20,7 +21,7 @@ public class DynamicDungeon extends JFrame implements KeyListener, MouseListener
     private Screen screen;
 
     public DynamicDungeon() {
-	super();
+	super("Dynamic Dungeon");
 	this.terminal = new GuiPanel();
 	this.messages = new MessagePanel();
 	this.setLayout(new BorderLayout());
@@ -87,8 +88,46 @@ public class DynamicDungeon extends JFrame implements KeyListener, MouseListener
     }
 
     public static void main(final String[] args) {
+	DynamicDungeon.hookLAF();
 	final DynamicDungeon app = new DynamicDungeon();
 	app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	app.setVisible(true);
+    }
+
+    private static void hookLAF() {
+	if (System.getProperty("os.name").startsWith("Mac")) {
+	    // macOS-specific stuff
+	    try {
+		// Tell the UIManager to use the platform native look and
+		// feel
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		// Hint to the UI that the L&F is decorated
+		JFrame.setDefaultLookAndFeelDecorated(true);
+	    } catch (final Exception e) {
+		// Do nothing
+	    }
+	    System.setProperty("apple.laf.useScreenMenuBar", "true");
+	} else if (System.getProperty("os.name").startsWith("Windows")) {
+	    // Windows-specific stuff
+	    try {
+		// Tell the UIManager to use the platform native look and
+		// feel
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		// Hint to the UI that the L&F is decorated
+		JFrame.setDefaultLookAndFeelDecorated(true);
+	    } catch (final Exception e) {
+		// Do nothing
+	    }
+	} else {
+	    // All other platforms
+	    try {
+		// Tell the UIManager to use the Nimbus look and feel
+		UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		// Hint to the UI that the L&F is decorated
+		JFrame.setDefaultLookAndFeelDecorated(true);
+	    } catch (final Exception e) {
+		// Do nothing
+	    }
+	}
     }
 }
