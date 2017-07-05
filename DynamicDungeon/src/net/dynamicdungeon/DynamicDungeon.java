@@ -30,7 +30,7 @@ public class DynamicDungeon extends JFrame implements KeyListener, MouseListener
 	this.pack();
 	this.screen = new StartScreen();
 	this.addKeyListener(this);
-	this.getContentPane().addMouseListener(this);
+	this.terminal.addMouseListener(this);
 	this.repaint();
 	Music.play();
     }
