@@ -8,7 +8,7 @@ public class LevelUpController {
 	@Override
 	public void invoke(final Creature creature) {
 	    creature.modifyMaxHp(10);
-	    creature.modifyHp(10, "Died from increaced hp level-up bonus?");
+	    creature.modifyHp(10, "Died from increased hp level-up bonus?");
 	    creature.doAction("look a lot healthier");
 	}
     }, new LevelUpOption("Increased mana") {
