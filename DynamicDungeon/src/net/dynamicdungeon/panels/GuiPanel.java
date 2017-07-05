@@ -43,7 +43,7 @@ public class GuiPanel extends JPanel {
     private final int heightInTiles;
     private final int tileWidth = Constants.TILE_SIZE_IN_PIXELS;
     private final int tileHeight = Constants.TILE_SIZE_IN_PIXELS;
-    private final int depthInTiles = 3;
+    private final int depthInTiles = Constants.SCREEN_DEPTH_IN_TILES;
     private GuiPanelState state;
     private final Stack<GuiPanelState> stateStack;
 
