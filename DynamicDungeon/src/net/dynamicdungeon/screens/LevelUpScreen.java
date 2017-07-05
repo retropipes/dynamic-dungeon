@@ -21,7 +21,7 @@ public class LevelUpScreen implements Screen {
     }
 
     @Override
-    public void displayOutput(final GuiPanel terminal, MessagePanel messages) {
+    public void displayOutput(final GuiPanel terminal, final MessagePanel messages) {
 	final List<String> options = this.controller.getLevelUpOptions();
 	messages.clear();
 	messages.write("Choose a level up bonus:");
@@ -31,7 +31,7 @@ public class LevelUpScreen implements Screen {
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
+    public Screen respondToUserInput(final KeyEvent key, final MouseEvent mouse) {
 	if (key != null) {
 	    final List<String> options = this.controller.getLevelUpOptions();
 	    String chars = "";

@@ -11,7 +11,7 @@ import net.dynamicdungeon.constants.Constants;
 import net.dynamicdungeon.world.Tile;
 
 /**
- * 
+ *
  * @author Eric Ahnell
  */
 public class GuiPanel extends JPanel {
@@ -49,7 +49,7 @@ public class GuiPanel extends JPanel {
 
     /**
      * Gets the height, in pixels, of a tile.
-     * 
+     *
      * @return
      */
     public int getTileHeight() {
@@ -58,7 +58,7 @@ public class GuiPanel extends JPanel {
 
     /**
      * Gets the width, in pixels, of a tile.
-     * 
+     *
      * @return
      */
     public int getTileWidth() {
@@ -67,7 +67,7 @@ public class GuiPanel extends JPanel {
 
     /**
      * Gets the height in tiles.
-     * 
+     *
      * @return
      */
     public int getHeightInTiles() {
@@ -76,7 +76,7 @@ public class GuiPanel extends JPanel {
 
     /**
      * Gets the width in tiles.
-     * 
+     *
      * @return
      */
     public int getWidthInTiles() {
@@ -85,7 +85,7 @@ public class GuiPanel extends JPanel {
 
     /**
      * Gets the distance from the left new tiles will be written to.
-     * 
+     *
      * @return
      */
     public int getCursorX() {
@@ -95,7 +95,7 @@ public class GuiPanel extends JPanel {
     /**
      * Sets the distance from the left new tiles will be written to. This should
      * be equal to or greater than 0 and less than the the width in tiles.
-     * 
+     *
      * @param cursorX
      *            the distance from the left new tiles should be written to
      */
@@ -109,7 +109,7 @@ public class GuiPanel extends JPanel {
 
     /**
      * Gets the distance from the top new tiles will be written to.
-     * 
+     *
      * @return
      */
     public int getCursorY() {
@@ -119,7 +119,7 @@ public class GuiPanel extends JPanel {
     /**
      * Sets the distance from the top new tiles will be written to. This should
      * be equal to or greater than 0 and less than the the height in tiles.
-     * 
+     *
      * @param cursorY
      *            the distance from the top new tiles should be written to
      */
@@ -136,7 +136,7 @@ public class GuiPanel extends JPanel {
      * origin (0,0) is the upper left corner. The x should be equal to or
      * greater than 0 and less than the the width in tiles. The y should be
      * equal to or greater than 0 and less than the the height in tiles.
-     * 
+     *
      * @param x
      *            the distance from the left new tiles should be written to
      * @param y
@@ -156,7 +156,7 @@ public class GuiPanel extends JPanel {
 
     /**
      * Class constructor specifying the width and height in tiles.
-     * 
+     *
      * @param width
      * @param height
      */
@@ -218,7 +218,7 @@ public class GuiPanel extends JPanel {
 
     /**
      * Clear the entire screen to whatever the default tile is.
-     * 
+     *
      * @return this for convenient chaining of method calls
      */
     public GuiPanel clear() {
@@ -229,7 +229,7 @@ public class GuiPanel extends JPanel {
 
     /**
      * Clear the entire screen with the specified tile.
-     * 
+     *
      * @param tile
      *            the tile to write
      * @return this for convenient chaining of method calls
@@ -240,7 +240,7 @@ public class GuiPanel extends JPanel {
 
     /**
      * Clear the section of the screen with the specified tile.
-     * 
+     *
      * @param tile
      *            the tile to write
      * @param x
@@ -285,7 +285,7 @@ public class GuiPanel extends JPanel {
     /**
      * Write a tile to the cursor's position. This updates the cursor's
      * position.
-     * 
+     *
      * @param tile
      *            the tile to write
      * @return this for convenient chaining of method calls
@@ -297,7 +297,7 @@ public class GuiPanel extends JPanel {
     /**
      * Write a tile to the specified position. This updates the cursor's
      * position.
-     * 
+     *
      * @param tile
      *            the tile to write
      * @param x

@@ -8,7 +8,7 @@ import net.dynamicdungeon.panels.MessagePanel;
 
 public class HelpScreen implements Screen {
     @Override
-    public void displayOutput(final GuiPanel terminal, MessagePanel messages) {
+    public void displayOutput(final GuiPanel terminal, final MessagePanel messages) {
 	messages.write("Dynamic Dungeon Help");
 	messages.write("Descend the Deep Dungeons, find the lost Amulet, and return to");
 	messages.write("the surface to win. Use what you find to avoid dying.");
@@ -26,7 +26,7 @@ public class HelpScreen implements Screen {
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
+    public Screen respondToUserInput(final KeyEvent key, final MouseEvent mouse) {
 	return null;
     }
 }

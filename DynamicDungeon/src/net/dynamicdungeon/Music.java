@@ -12,7 +12,7 @@ import javax.sound.sampled.SourceDataLine;
 
 public class Music {
     // Fields
-    private URL url;
+    private final URL url;
     private AudioInputStream stream;
     private AudioInputStream decodedStream;
     private AudioFormat format;
@@ -26,7 +26,7 @@ public class Music {
 
     public static void play() {
 	final Music m = new Music(Music.class.getResource("/assets/music/dungeon.ogg"));
-	Thread t = new Thread() {
+	final Thread t = new Thread() {
 	    @Override
 	    public void run() {
 		m.playLoop();
@@ -52,13 +52,13 @@ public class Music {
 		    // VorbisSPI
 		    this.decodedStream = AudioSystem.getAudioInputStream(this.decodedFormat, this.stream);
 		}
-	    } catch (Exception e) {
+	    } catch (final Exception e) {
 		// Do nothing
 	    }
 	    try (SourceDataLine line = Music.getLine(this.decodedFormat)) {
 		if (line != null) {
 		    try {
-			byte[] data = new byte[4096];
+			final byte[] data = new byte[4096];
 			// Start
 			line.start();
 			int nBytesRead = 0;
@@ -74,7 +74,7 @@ public class Music {
 			// Stop
 			line.drain();
 			line.stop();
-		    } catch (IOException io) {
+		    } catch (final IOException io) {
 			// Do nothing
 		    } finally {
 			// Stop
@@ -82,15 +82,15 @@ public class Music {
 			line.stop();
 		    }
 		}
-	    } catch (LineUnavailableException lue) {
+	    } catch (final LineUnavailableException lue) {
 		// Do nothing
 	    }
 	}
     }
 
-    private static SourceDataLine getLine(AudioFormat audioFormat) throws LineUnavailableException {
+    private static SourceDataLine getLine(final AudioFormat audioFormat) throws LineUnavailableException {
 	SourceDataLine res = null;
-	DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+	final DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 	res = (SourceDataLine) AudioSystem.getLine(info);
 	res.open(audioFormat);
 	return res;

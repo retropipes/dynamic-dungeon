@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 /**
- * 
+ *
  * @author Eric Ahnell
  */
 public class MessagePanel extends JPanel {
@@ -32,7 +32,7 @@ public class MessagePanel extends JPanel {
 
     /**
      * Write a string to the message panel, appending to what's already there.
-     * 
+     *
      * @param character
      *            the character to write
      * @return this for convenient chaining of method calls
@@ -41,7 +41,7 @@ public class MessagePanel extends JPanel {
 	if (this.isFull()) {
 	    this.message.setText("");
 	}
-	String currText = this.message.getText();
+	final String currText = this.message.getText();
 	if (currText.isEmpty()) {
 	    this.message.setText(string);
 	} else {

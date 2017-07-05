@@ -12,23 +12,23 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Sound {
     public static void play(final String soundName) {
-	Thread player = new Thread() {
+	final Thread player = new Thread() {
 	    @Override
 	    public void run() {
 		try {
-		    AudioInputStream in = AudioSystem.getAudioInputStream(
+		    final AudioInputStream in = AudioSystem.getAudioInputStream(
 			    Sound.class.getResourceAsStream("/assets/sounds/" + soundName + ".wav"));
 		    if (in != null) {
-			AudioFormat baseFormat = in.getFormat();
-			AudioFormat targetFormat = new AudioFormat(baseFormat.getEncoding(), baseFormat.getSampleRate(),
-				baseFormat.getSampleSizeInBits(), baseFormat.getChannels(),
+			final AudioFormat baseFormat = in.getFormat();
+			final AudioFormat targetFormat = new AudioFormat(baseFormat.getEncoding(),
+				baseFormat.getSampleRate(), baseFormat.getSampleSizeInBits(), baseFormat.getChannels(),
 				baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
-			AudioInputStream dataIn = AudioSystem.getAudioInputStream(targetFormat, in);
-			byte[] buffer = new byte[4096];
+			final AudioInputStream dataIn = AudioSystem.getAudioInputStream(targetFormat, in);
+			final byte[] buffer = new byte[4096];
 			// get a line from a mixer in the system with the wanted
 			// format
-			DataLine.Info info = new DataLine.Info(SourceDataLine.class, targetFormat);
-			SourceDataLine line = (SourceDataLine) AudioSystem.getLine(info);
+			final DataLine.Info info = new DataLine.Info(SourceDataLine.class, targetFormat);
+			final SourceDataLine line = (SourceDataLine) AudioSystem.getLine(info);
 			if (line != null) {
 			    line.open();
 			    line.start();

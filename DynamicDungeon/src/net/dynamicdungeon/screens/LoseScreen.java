@@ -16,7 +16,7 @@ public class LoseScreen implements Screen {
     }
 
     @Override
-    public void displayOutput(final GuiPanel terminal, MessagePanel messages) {
+    public void displayOutput(final GuiPanel terminal, final MessagePanel messages) {
 	Sound.play("lose");
 	messages.clear();
 	messages.write("R.I.P.");
@@ -25,7 +25,7 @@ public class LoseScreen implements Screen {
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
+    public Screen respondToUserInput(final KeyEvent key, final MouseEvent mouse) {
 	if (key != null) {
 	    return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen() : this;
 	}

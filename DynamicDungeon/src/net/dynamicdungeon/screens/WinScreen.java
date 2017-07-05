@@ -9,7 +9,7 @@ import net.dynamicdungeon.panels.MessagePanel;
 
 public class WinScreen implements Screen {
     @Override
-    public void displayOutput(final GuiPanel terminal, MessagePanel messages) {
+    public void displayOutput(final GuiPanel terminal, final MessagePanel messages) {
 	Sound.play("win");
 	messages.clear();
 	messages.write("You won.");
@@ -17,7 +17,7 @@ public class WinScreen implements Screen {
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
+    public Screen respondToUserInput(final KeyEvent key, final MouseEvent mouse) {
 	if (key != null) {
 	    return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen() : this;
 	}

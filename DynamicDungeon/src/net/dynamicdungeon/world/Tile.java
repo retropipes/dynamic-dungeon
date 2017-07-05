@@ -39,7 +39,7 @@ public class Tile extends BufferedImage {
     public static final Tile APPLE = new Tile("/assets/images/items/apple.png", "An apple!");
     public static final Tile BREAD = new Tile("/assets/images/items/bread.png", "Some bread!");
     public static Tile PLAYER = new Tile("/assets/images/characters/player.png", "This is you!");
-    private String description;
+    private final String description;
 
     Tile(final String description) {
 	super(Constants.TILE_SIZE_IN_PIXELS, Constants.TILE_SIZE_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
@@ -50,9 +50,9 @@ public class Tile extends BufferedImage {
 	super(Constants.TILE_SIZE_IN_PIXELS, Constants.TILE_SIZE_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
 	this.description = description;
 	try {
-	    BufferedImage data = ImageIO.read(Tile.class.getResource(assetPath));
+	    final BufferedImage data = ImageIO.read(Tile.class.getResource(assetPath));
 	    this.getGraphics().drawImage(data, 0, 0, null);
-	} catch (IOException ioe) {
+	} catch (final IOException ioe) {
 	    System.err.println("Image loading failed for: " + assetPath);
 	}
     }
@@ -62,7 +62,7 @@ public class Tile extends BufferedImage {
     }
 
     public boolean isGround() {
-	return this != WALL && this != BOUNDS;
+	return this != Tile.WALL && this != Tile.BOUNDS;
     }
 
     public boolean isDiggable() {

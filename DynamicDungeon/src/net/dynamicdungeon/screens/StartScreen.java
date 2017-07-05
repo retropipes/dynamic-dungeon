@@ -8,14 +8,14 @@ import net.dynamicdungeon.panels.MessagePanel;
 
 public class StartScreen implements Screen {
     @Override
-    public void displayOutput(final GuiPanel terminal, MessagePanel messages) {
+    public void displayOutput(final GuiPanel terminal, final MessagePanel messages) {
 	messages.clear();
 	messages.write("Dynamic Dungeon");
 	messages.write("-- press [enter] to start --");
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
+    public Screen respondToUserInput(final KeyEvent key, final MouseEvent mouse) {
 	if (key != null) {
 	    return key.getKeyCode() == KeyEvent.VK_ENTER ? new PlayScreen(true) : this;
 	}

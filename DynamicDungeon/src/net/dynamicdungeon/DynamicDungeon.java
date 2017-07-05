@@ -61,29 +61,29 @@ public class DynamicDungeon extends JFrame implements KeyListener, MouseListener
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(final MouseEvent e) {
 	this.screen = this.screen.respondToUserInput(null, e);
 	this.pack();
 	this.repaint();
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(final MouseEvent e) {
 	// Do nothing
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(final MouseEvent e) {
 	// Do nothing
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(final MouseEvent e) {
 	// Do nothing
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(final MouseEvent e) {
 	// Do nothing
     }
 

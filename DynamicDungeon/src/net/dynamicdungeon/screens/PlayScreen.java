@@ -99,7 +99,7 @@ public class PlayScreen implements Screen {
     }
 
     @Override
-    public void displayOutput(final GuiPanel terminal, MessagePanel messages) {
+    public void displayOutput(final GuiPanel terminal, final MessagePanel messages) {
 	if (this.firstTimeFlag) {
 	    messages.clear();
 	    this.firstTimeFlag = false;
@@ -141,13 +141,13 @@ public class PlayScreen implements Screen {
 		final int wy = y + top;
 		if (this.player.canSee(wx, wy, this.player.z)) {
 		    terminal.write(this.world.tile(wx, wy, this.player.z), x, y, 0);
-		    Item i = this.world.item(wx, wy, this.player.z);
+		    final Item i = this.world.item(wx, wy, this.player.z);
 		    if (i != null) {
 			terminal.write(i.tile(), x, y, 1);
 		    } else {
 			terminal.write(null, x, y, 1);
 		    }
-		    Creature c = this.world.creature(wx, wy, this.player.z);
+		    final Creature c = this.world.creature(wx, wy, this.player.z);
 		    if (c != null) {
 			terminal.write(this.world.creature(wx, wy, this.player.z).tile(), x, y, 2);
 		    } else {
@@ -163,7 +163,7 @@ public class PlayScreen implements Screen {
     }
 
     @Override
-    public Screen respondToUserInput(final KeyEvent key, MouseEvent mouse) {
+    public Screen respondToUserInput(final KeyEvent key, final MouseEvent mouse) {
 	final int level = this.player.level();
 	if (this.subscreen != null) {
 	    this.subscreen = this.subscreen.respondToUserInput(key, mouse);

@@ -177,6 +177,7 @@ public class WorldBuilder {
     }
 
     public WorldBuilder makeCaves() {
-	return this.randomizeTiles().smooth(Constants.WORLD_SMOOTHING_PASSES).createRegions().connectRegions().addExitStairs();
+	return this.randomizeTiles().smooth(Constants.WORLD_SMOOTHING_PASSES).createRegions().connectRegions()
+		.addExitStairs();
     }
 }
