@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.dynamicdungeon.ai.CreatureAi;
+import net.dynamicdungeon.world.Tile;
+import net.dynamicdungeon.world.World;
 
 public class Creature {
     private final World world;

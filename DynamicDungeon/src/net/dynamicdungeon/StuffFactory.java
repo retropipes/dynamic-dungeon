@@ -7,6 +7,8 @@ import net.dynamicdungeon.ai.FungusAi;
 import net.dynamicdungeon.ai.GoblinAi;
 import net.dynamicdungeon.ai.PlayerAi;
 import net.dynamicdungeon.ai.ZombieAi;
+import net.dynamicdungeon.world.Tile;
+import net.dynamicdungeon.world.World;
 
 public class StuffFactory {
     private final World world;

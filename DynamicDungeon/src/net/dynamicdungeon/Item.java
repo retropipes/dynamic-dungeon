@@ -3,6 +3,8 @@ package net.dynamicdungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.dynamicdungeon.world.Tile;
+
 public class Item {
     private final Tile tile;
 

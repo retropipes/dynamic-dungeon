@@ -1,5 +1,8 @@
 package net.dynamicdungeon;
 
+import net.dynamicdungeon.world.Tile;
+import net.dynamicdungeon.world.World;
+
 public class FieldOfView {
     private final World world;
     private int depth;

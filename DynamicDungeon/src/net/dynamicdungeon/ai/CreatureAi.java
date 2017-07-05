@@ -10,7 +10,7 @@ import net.dynamicdungeon.LevelUpController;
 import net.dynamicdungeon.Line;
 import net.dynamicdungeon.Path;
 import net.dynamicdungeon.Point;
-import net.dynamicdungeon.Tile;
+import net.dynamicdungeon.world.Tile;
 
 public class CreatureAi {
     protected Creature creature;

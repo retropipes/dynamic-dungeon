@@ -7,7 +7,7 @@ import java.util.Stack;
 
 import javax.swing.JPanel;
 
-import net.dynamicdungeon.Tile;
+import net.dynamicdungeon.world.Tile;
 
 /**
  * 

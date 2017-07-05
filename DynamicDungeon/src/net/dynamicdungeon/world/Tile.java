@@ -1,4 +1,4 @@
-package net.dynamicdungeon;
+package net.dynamicdungeon.world;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

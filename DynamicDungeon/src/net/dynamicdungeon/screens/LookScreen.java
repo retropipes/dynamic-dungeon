@@ -2,7 +2,7 @@ package net.dynamicdungeon.screens;
 
 import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.Item;
-import net.dynamicdungeon.Tile;
+import net.dynamicdungeon.world.Tile;
 
 public class LookScreen extends TargetBasedScreen {
     public LookScreen(final Creature player, final String caption, final int sx, final int sy) {

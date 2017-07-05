@@ -9,11 +9,11 @@ import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.FieldOfView;
 import net.dynamicdungeon.Item;
 import net.dynamicdungeon.StuffFactory;
-import net.dynamicdungeon.Tile;
-import net.dynamicdungeon.World;
-import net.dynamicdungeon.WorldBuilder;
 import net.dynamicdungeon.panels.GuiPanel;
 import net.dynamicdungeon.panels.MessagePanel;
+import net.dynamicdungeon.world.Tile;
+import net.dynamicdungeon.world.World;
+import net.dynamicdungeon.world.WorldBuilder;
 
 public class PlayScreen implements Screen {
     private World world;

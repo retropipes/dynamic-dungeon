@@ -1,8 +1,10 @@
-package net.dynamicdungeon;
+package net.dynamicdungeon.world;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import net.dynamicdungeon.Point;
 
 public class WorldBuilder {
     private final int width;
