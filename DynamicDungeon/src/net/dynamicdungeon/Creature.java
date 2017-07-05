@@ -3,6 +3,8 @@ package net.dynamicdungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.dynamicdungeon.ai.CreatureAi;
+
 public class Creature {
     private final World world;
     public int x;

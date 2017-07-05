@@ -1,6 +1,11 @@
-package net.dynamicdungeon;
+package net.dynamicdungeon.ai;
 
 import java.util.List;
+
+import net.dynamicdungeon.Creature;
+import net.dynamicdungeon.FieldOfView;
+import net.dynamicdungeon.Item;
+import net.dynamicdungeon.Tile;
 
 public class PlayerAi extends CreatureAi {
     private final List<String> messages;

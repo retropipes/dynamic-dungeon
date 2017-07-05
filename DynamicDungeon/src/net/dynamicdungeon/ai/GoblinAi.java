@@ -1,4 +1,6 @@
-package net.dynamicdungeon;
+package net.dynamicdungeon.ai;
+
+import net.dynamicdungeon.Creature;
 
 public class GoblinAi extends CreatureAi {
     private final Creature player;

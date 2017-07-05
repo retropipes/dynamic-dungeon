@@ -2,6 +2,12 @@ package net.dynamicdungeon;
 
 import java.util.List;
 
+import net.dynamicdungeon.ai.BatAi;
+import net.dynamicdungeon.ai.FungusAi;
+import net.dynamicdungeon.ai.GoblinAi;
+import net.dynamicdungeon.ai.PlayerAi;
+import net.dynamicdungeon.ai.ZombieAi;
+
 public class StuffFactory {
     private final World world;
 

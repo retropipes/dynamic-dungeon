@@ -1,8 +1,16 @@
-package net.dynamicdungeon;
+package net.dynamicdungeon.ai;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.dynamicdungeon.Creature;
+import net.dynamicdungeon.Item;
+import net.dynamicdungeon.LevelUpController;
+import net.dynamicdungeon.Line;
+import net.dynamicdungeon.Path;
+import net.dynamicdungeon.Point;
+import net.dynamicdungeon.Tile;
 
 public class CreatureAi {
     protected Creature creature;

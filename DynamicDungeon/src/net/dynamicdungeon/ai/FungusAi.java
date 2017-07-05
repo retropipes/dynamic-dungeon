@@ -1,4 +1,7 @@
-package net.dynamicdungeon;
+package net.dynamicdungeon.ai;
+
+import net.dynamicdungeon.Creature;
+import net.dynamicdungeon.StuffFactory;
 
 public class FungusAi extends CreatureAi {
     private final StuffFactory factory;
