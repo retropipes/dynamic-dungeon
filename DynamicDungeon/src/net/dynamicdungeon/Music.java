@@ -25,7 +25,16 @@ public class Music {
     }
 
     public static void play() {
-	new Music(Music.class.getResource("/assets/music/dungeon.ogg")).playLoop();
+	final Music m = new Music(Music.class.getResource("/assets/music/dungeon.ogg"));
+	Thread t = new Thread() {
+	    @Override
+	    public void run() {
+		m.playLoop();
+	    }
+	};
+	t.setName("Music Player");
+	t.setDaemon(true);
+	t.start();
     }
 
     public void playLoop() {
