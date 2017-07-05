@@ -8,4 +8,8 @@ public class Constants {
     public static final int WORLD_HEIGHT_IN_TILES = 32;
     public static final int WORLD_DEPTH_IN_TILES = 5;
     public static final int TILE_SIZE_IN_PIXELS = 32;
+    public static final int WORLD_REGION_TRIM_SIZE = 25;
+    public static final int WORLD_SMOOTHING_PASSES = 8;
+    public static final int WORLD_CONNECT_DOWN_MIN_SIZE = 250;
+    
 }

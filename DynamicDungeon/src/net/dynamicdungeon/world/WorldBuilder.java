@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.dynamicdungeon.Point;
+import net.dynamicdungeon.constants.Constants;
 
 public class WorldBuilder {
     private final int width;
@@ -74,7 +75,7 @@ public class WorldBuilder {
 		for (int y = 0; y < this.height; y++) {
 		    if (this.tiles[x][y][z] != Tile.WALL && this.regions[x][y][z] == 0) {
 			final int size = this.fillRegion(this.nextRegion++, x, y, z);
-			if (size < 25) {
+			if (size < Constants.WORLD_REGION_TRIM_SIZE) {
 			    this.removeRegion(this.nextRegion - 1, z);
 			}
 		    }
@@ -147,7 +148,7 @@ public class WorldBuilder {
 	    this.tiles[p.x][p.y][z] = Tile.STAIRS_DOWN;
 	    this.tiles[p.x][p.y][z + 1] = Tile.STAIRS_UP;
 	    stairs++;
-	} while (candidates.size() / stairs > 250);
+	} while (candidates.size() / stairs > Constants.WORLD_CONNECT_DOWN_MIN_SIZE);
     }
 
     public List<Point> findRegionOverlaps(final int z, final int r1, final int r2) {
@@ -176,6 +177,6 @@ public class WorldBuilder {
     }
 
     public WorldBuilder makeCaves() {
-	return this.randomizeTiles().smooth(8).createRegions().connectRegions().addExitStairs();
+	return this.randomizeTiles().smooth(Constants.WORLD_SMOOTHING_PASSES).createRegions().connectRegions().addExitStairs();
     }
 }
