@@ -4,9 +4,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import net.dynamicdungeon.Creature;
-import net.dynamicdungeon.Sound;
 import net.dynamicdungeon.panels.GuiPanel;
 import net.dynamicdungeon.panels.MessagePanel;
+import net.dynamicdungeon.sound.Sound;
 
 public class LoseScreen implements Screen {
     private final Creature player;

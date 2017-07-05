@@ -13,6 +13,7 @@ import net.dynamicdungeon.panels.GuiPanel;
 import net.dynamicdungeon.panels.MessagePanel;
 import net.dynamicdungeon.screens.Screen;
 import net.dynamicdungeon.screens.StartScreen;
+import net.dynamicdungeon.sound.Music;
 
 public class DynamicDungeon extends JFrame implements KeyListener, MouseListener {
     private static final long serialVersionUID = 1060623638149583738L;

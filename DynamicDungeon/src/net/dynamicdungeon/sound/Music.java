@@ -1,4 +1,4 @@
-package net.dynamicdungeon;
+package net.dynamicdungeon.sound;
 
 import java.io.IOException;
 import java.net.URL;

@@ -3,9 +3,9 @@ package net.dynamicdungeon.screens;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import net.dynamicdungeon.Sound;
 import net.dynamicdungeon.panels.GuiPanel;
 import net.dynamicdungeon.panels.MessagePanel;
+import net.dynamicdungeon.sound.Sound;
 
 public class WinScreen implements Screen {
     @Override
