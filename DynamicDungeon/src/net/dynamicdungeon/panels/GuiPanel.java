@@ -147,10 +147,10 @@ public class GuiPanel extends JPanel {
     }
 
     /**
-     * Class constructor. Default size is 30x22.
+     * Class constructor. Default size is 30x18.
      */
     public GuiPanel() {
-	this(30, 22);
+	this(30, 18);
     }
 
     /**
