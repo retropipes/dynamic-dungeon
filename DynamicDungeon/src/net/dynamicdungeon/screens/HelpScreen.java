@@ -10,13 +10,13 @@ public class HelpScreen implements Screen {
     @Override
     public void displayOutput(final GuiPanel terminal, MessagePanel messages) {
 	messages.write("Dynamic Dungeon Help");
-	messages.write("Descend the Caves Of Slight Danger, find the lost Teddy Bear, and return to");
+	messages.write("Descend the Deep Dungeons, find the lost Amulet, and return to");
 	messages.write("the surface to win. Use what you find to avoid dying.");
 	messages.write("[g] or [,] to pick up");
 	messages.write("[d] to drop");
 	messages.write("[e] to eat");
 	messages.write("[w] to wear or wield");
-	messages.write("[?] for help");
+	messages.write("[?] or [/] for help");
 	messages.write("[x] to examine your items");
 	messages.write("[;] to look around");
 	messages.write("[t] to throw an item");
