@@ -7,6 +7,7 @@ import java.util.Stack;
 
 import javax.swing.JPanel;
 
+import net.dynamicdungeon.constants.Constants;
 import net.dynamicdungeon.world.Tile;
 
 /**
@@ -40,8 +41,8 @@ public class GuiPanel extends JPanel {
 
     private final int widthInTiles;
     private final int heightInTiles;
-    private final int tileWidth = 32;
-    private final int tileHeight = 32;
+    private final int tileWidth = Constants.TILE_SIZE_IN_PIXELS;
+    private final int tileHeight = Constants.TILE_SIZE_IN_PIXELS;
     private final int depthInTiles = 3;
     private GuiPanelState state;
     private final Stack<GuiPanelState> stateStack;
@@ -150,7 +151,7 @@ public class GuiPanel extends JPanel {
      * Class constructor. Default size is 30x18.
      */
     public GuiPanel() {
-	this(30, 18);
+	this(Constants.SCREEN_WIDTH_IN_TILES, Constants.SCREEN_HEIGHT_IN_TILES);
     }
 
     /**

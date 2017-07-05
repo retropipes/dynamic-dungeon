@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import net.dynamicdungeon.Creature;
+import net.dynamicdungeon.constants.Constants;
 import net.dynamicdungeon.panels.GuiPanel;
 import net.dynamicdungeon.panels.MessagePanel;
 
@@ -82,8 +83,8 @@ public abstract class TargetBasedScreen implements Screen {
 	    }
 	}
 	if (mouse != null) {
-	    this.x = (mouse.getX() / 32) - this.sx - px;
-	    this.y = (mouse.getY() / 32) - this.sy - py;
+	    this.x = (mouse.getX() / Constants.TILE_SIZE_IN_PIXELS) - this.sx - px;
+	    this.y = (mouse.getY() / Constants.TILE_SIZE_IN_PIXELS) - this.sy - py;
 	    if (!this.isAcceptable(this.player.x + this.x, this.player.y + this.y)) {
 		this.x = px;
 		this.y = py;

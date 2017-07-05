@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import net.dynamicdungeon.constants.Constants;
+
 public class Tile extends BufferedImage {
     public static final Tile FLOOR = new Tile("/assets/images/terrain/floor.png", "A dirt and rock cave floor.");
     public static final Tile WALL = new Tile("/assets/images/terrain/wall.png", "A dirt and rock cave wall.");
@@ -12,8 +14,7 @@ public class Tile extends BufferedImage {
     public static final Tile DARKNESS = new Tile("/assets/images/terrain/darkness.png", "Not visible right now.");
     public static final Tile STAIRS_DOWN = new Tile("/assets/images/terrain/down.png",
 	    "A stone staircase that goes down.");
-    public static final Tile STAIRS_UP = new Tile("/assets/images/terrain/up.png",
-	    "A stone staircase that goes up.");
+    public static final Tile STAIRS_UP = new Tile("/assets/images/terrain/up.png", "A stone staircase that goes up.");
     public static final Tile FUNGUS = new Tile("/assets/images/monsters/fungus.png", "A fungus.");
     public static final Tile BAT = new Tile("/assets/images/monsters/bat.png", "A bat.");
     public static final Tile ZOMBIE = new Tile("/assets/images/monsters/zombie.png", "A zombie.");
@@ -26,10 +27,13 @@ public class Tile extends BufferedImage {
     public static final Tile SWORD = new Tile("/assets/images/items/sword.png", "A sword of some sort!");
     public static final Tile STAFF = new Tile("/assets/images/items/staff.png", "A staff of some sort!");
     public static final Tile BOW = new Tile("/assets/images/items/bow.png", "A bow of some sort!");
-    public static final Tile MAGIC_WEAPON = new Tile("/assets/images/items/staff.png", "An enchanted weapon of some sort!");
-    public static final Tile LIGHT_ARMOR = new Tile("/assets/images/items/lightarmor.png", "Some light armor of some sort!");
+    public static final Tile MAGIC_WEAPON = new Tile("/assets/images/items/staff.png",
+	    "An enchanted weapon of some sort!");
+    public static final Tile LIGHT_ARMOR = new Tile("/assets/images/items/lightarmor.png",
+	    "Some light armor of some sort!");
     public static final Tile ARMOR = new Tile("/assets/images/items/armor.png", "Some armor of some sort!");
-    public static final Tile HEAVY_ARMOR = new Tile("/assets/images/items/heavyarmor.png", "Some heavy armor of some sort!");
+    public static final Tile HEAVY_ARMOR = new Tile("/assets/images/items/heavyarmor.png",
+	    "Some heavy armor of some sort!");
     public static final Tile SPELL = new Tile("/assets/images/items/spell.png", "A spell book of some sort!");
     public static final Tile POTION = new Tile("/assets/images/items/potion.png", "A potion of some sort!");
     public static final Tile APPLE = new Tile("/assets/images/items/apple.png", "An apple!");
@@ -38,12 +42,12 @@ public class Tile extends BufferedImage {
     private String description;
 
     Tile(final String description) {
-	super(32, 32, BufferedImage.TYPE_INT_ARGB);
+	super(Constants.TILE_SIZE_IN_PIXELS, Constants.TILE_SIZE_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
 	this.description = description;
     }
 
     Tile(final String assetPath, final String description) {
-	super(32, 32, BufferedImage.TYPE_INT_ARGB);
+	super(Constants.TILE_SIZE_IN_PIXELS, Constants.TILE_SIZE_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
 	this.description = description;
 	try {
 	    BufferedImage data = ImageIO.read(Tile.class.getResource(assetPath));

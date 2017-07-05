@@ -9,6 +9,7 @@ import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.FieldOfView;
 import net.dynamicdungeon.Item;
 import net.dynamicdungeon.StuffFactory;
+import net.dynamicdungeon.constants.Constants;
 import net.dynamicdungeon.panels.GuiPanel;
 import net.dynamicdungeon.panels.MessagePanel;
 import net.dynamicdungeon.world.Tile;
@@ -26,8 +27,8 @@ public class PlayScreen implements Screen {
     private boolean firstTimeFlag;
 
     public PlayScreen() {
-	this.screenWidth = 30;
-	this.screenHeight = 18;
+	this.screenWidth = Constants.SCREEN_WIDTH_IN_TILES;
+	this.screenHeight = Constants.SCREEN_HEIGHT_IN_TILES;
 	this.messages = new ArrayList<>();
 	this.createWorld();
 	this.fov = new FieldOfView(this.world);
@@ -38,8 +39,8 @@ public class PlayScreen implements Screen {
     }
 
     public PlayScreen(final boolean first) {
-	this.screenWidth = 30;
-	this.screenHeight = 22;
+	this.screenWidth = Constants.SCREEN_WIDTH_IN_TILES;
+	this.screenHeight = Constants.SCREEN_HEIGHT_IN_TILES;
 	this.messages = new ArrayList<>();
 	this.createWorld();
 	this.fov = new FieldOfView(this.world);
@@ -85,7 +86,8 @@ public class PlayScreen implements Screen {
     }
 
     private void createWorld() {
-	this.world = new WorldBuilder(90, 32, 5).makeCaves().build();
+	this.world = new WorldBuilder(Constants.WORLD_WIDTH_IN_TILES, Constants.WORLD_HEIGHT_IN_TILES,
+		Constants.WORLD_DEPTH_IN_TILES).makeCaves().build();
     }
 
     public int getScrollX() {
