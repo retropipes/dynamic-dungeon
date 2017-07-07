@@ -45,18 +45,6 @@ public class XMLFileReader implements AutoCloseable {
 	}
     }
 
-    public char readChar() throws IOException {
-	String line = this.br.readLine();
-	if (line != null) {
-	    String[] split = XMLFileReader.splitLine(line);
-	    XMLFileReader.validateOpeningTag(split[0], XMLFileConstants.CHARACTER_TAG);
-	    XMLFileReader.validateClosingTag(split[2], XMLFileConstants.CHARACTER_TAG);
-	    return split[1].charAt(0);
-	} else {
-	    throw new IOException("End of file!");
-	}
-    }
-
     public int readInt() throws IOException {
 	String line = this.br.readLine();
 	if (line != null) {
@@ -111,6 +99,78 @@ public class XMLFileReader implements AutoCloseable {
 	    String[] split = XMLFileReader.splitLine(line);
 	    XMLFileReader.validateOpeningTag(split[0], XMLFileConstants.STRING_TAG);
 	    XMLFileReader.validateClosingTag(split[2], XMLFileConstants.STRING_TAG);
+	    return XMLFileReader.replaceSpecialCharacters(split[1]);
+	} else {
+	    throw new IOException("End of file!");
+	}
+    }
+
+    public double readCustomDouble(final String tag) throws IOException {
+	String line = this.br.readLine();
+	if (line != null) {
+	    String[] split = XMLFileReader.splitLine(line);
+	    XMLFileReader.validateOpeningTag(split[0], tag);
+	    XMLFileReader.validateClosingTag(split[2], tag);
+	    return Double.parseDouble(split[1]);
+	} else {
+	    throw new IOException("End of file!");
+	}
+    }
+
+    public int readCustomInt(final String tag) throws IOException {
+	String line = this.br.readLine();
+	if (line != null) {
+	    String[] split = XMLFileReader.splitLine(line);
+	    XMLFileReader.validateOpeningTag(split[0], tag);
+	    XMLFileReader.validateClosingTag(split[2], tag);
+	    return Integer.parseInt(split[1]);
+	} else {
+	    throw new IOException("End of file!");
+	}
+    }
+
+    public long readCustomLong(final String tag) throws IOException {
+	String line = this.br.readLine();
+	if (line != null) {
+	    String[] split = XMLFileReader.splitLine(line);
+	    XMLFileReader.validateOpeningTag(split[0], tag);
+	    XMLFileReader.validateClosingTag(split[2], tag);
+	    return Long.parseLong(split[1]);
+	} else {
+	    throw new IOException("End of file!");
+	}
+    }
+
+    public byte readCustomByte(final String tag) throws IOException {
+	String line = this.br.readLine();
+	if (line != null) {
+	    String[] split = XMLFileReader.splitLine(line);
+	    XMLFileReader.validateOpeningTag(split[0], tag);
+	    XMLFileReader.validateClosingTag(split[2], tag);
+	    return Byte.parseByte(split[1]);
+	} else {
+	    throw new IOException("End of file!");
+	}
+    }
+
+    public boolean readCustomBoolean(final String tag) throws IOException {
+	String line = this.br.readLine();
+	if (line != null) {
+	    String[] split = XMLFileReader.splitLine(line);
+	    XMLFileReader.validateOpeningTag(split[0], tag);
+	    XMLFileReader.validateClosingTag(split[2], tag);
+	    return Boolean.parseBoolean(split[1]);
+	} else {
+	    throw new IOException("End of file!");
+	}
+    }
+
+    public String readCustomString(final String tag) throws IOException {
+	String line = this.br.readLine();
+	if (line != null) {
+	    String[] split = XMLFileReader.splitLine(line);
+	    XMLFileReader.validateOpeningTag(split[0], tag);
+	    XMLFileReader.validateClosingTag(split[2], tag);
 	    return XMLFileReader.replaceSpecialCharacters(split[1]);
 	} else {
 	    throw new IOException("End of file!");

@@ -30,11 +30,6 @@ public class XMLFileWriter implements AutoCloseable {
 		+ ">" + XMLFileWriter.END_OF_LINE);
     }
 
-    public void writeChar(char c) throws IOException {
-	this.bw.write("<" + XMLFileConstants.CHARACTER_TAG + ">" + Character.toString(c) + "</"
-		+ XMLFileConstants.CHARACTER_TAG + ">" + XMLFileWriter.END_OF_LINE);
-    }
-
     public void writeInt(int i) throws IOException {
 	this.bw.write("<" + XMLFileConstants.INT_TAG + ">" + Integer.toString(i) + "</" + XMLFileConstants.INT_TAG + ">"
 		+ XMLFileWriter.END_OF_LINE);
@@ -58,6 +53,31 @@ public class XMLFileWriter implements AutoCloseable {
     public void writeString(String s) throws IOException {
 	this.bw.write("<" + XMLFileConstants.STRING_TAG + ">" + XMLFileWriter.replaceSpecialCharacters(s) + "</"
 		+ XMLFileConstants.STRING_TAG + ">" + XMLFileWriter.END_OF_LINE);
+    }
+
+    public void writeCustomDouble(double d, String tag) throws IOException {
+	this.bw.write("<" + tag + ">" + Double.toString(d) + "</" + tag + ">" + XMLFileWriter.END_OF_LINE);
+    }
+
+    public void writeCustomInt(int i, String tag) throws IOException {
+	this.bw.write("<" + tag + ">" + Integer.toString(i) + "</" + tag + ">" + XMLFileWriter.END_OF_LINE);
+    }
+
+    public void writeCustomLong(long l, String tag) throws IOException {
+	this.bw.write("<" + tag + ">" + Long.toString(l) + "</" + tag + ">" + XMLFileWriter.END_OF_LINE);
+    }
+
+    public void writeCustomByte(byte b, String tag) throws IOException {
+	this.bw.write("<" + tag + ">" + Byte.toString(b) + "</" + tag + ">" + XMLFileWriter.END_OF_LINE);
+    }
+
+    public void writeCustomBoolean(boolean b, String tag) throws IOException {
+	this.bw.write("<" + tag + ">" + Boolean.toString(b) + "</" + tag + ">" + XMLFileWriter.END_OF_LINE);
+    }
+
+    public void writeCustomString(String s, String tag) throws IOException {
+	this.bw.write("<" + tag + ">" + XMLFileWriter.replaceSpecialCharacters(s) + "</" + tag + ">"
+		+ XMLFileWriter.END_OF_LINE);
     }
 
     public void writeOpeningGroup(String groupName) throws IOException {
