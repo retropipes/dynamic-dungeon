@@ -8,4 +8,5 @@ class XMLFileConstants {
     public static final String BYTE_TAG = "byte";
     public static final String BOOLEAN_TAG = "boolean";
     public static final String STRING_TAG = "string";
+    public static final String CHARACTER_TAG = "character";
 }
