@@ -111,8 +111,9 @@ public class PlayScreen implements Screen {
 	    messages.write(this.messages.get(i));
 	}
 	this.messages.clear();
-	final String stats = String.format(" %3d/%3d hp   %d/%d mana   %8s", this.player.hp(), this.player.maxHp(),
-		this.player.mana(), this.player.maxMana(), this.hunger());
+	final String stats = String.format(" Health: %3d/%3d   Mana: %d/%d   Food: %d/%d %s", this.player.hp(),
+		this.player.maxHp(), this.player.mana(), this.player.maxMana(), this.player.food(),
+		this.player.maxFood(), this.hunger());
 	messages.setStats(stats);
 	if (this.subscreen != null) {
 	    this.subscreen.displayOutput(terminal, messages);
@@ -121,15 +122,15 @@ public class PlayScreen implements Screen {
 
     private String hunger() {
 	if (this.player.food() < this.player.maxFood() * 0.10) {
-	    return "Starving";
+	    return "(Starving)";
 	} else if (this.player.food() < this.player.maxFood() * 0.25) {
-	    return "Hungry";
+	    return "(Hungry)";
 	} else if (this.player.food() > this.player.maxFood() * 0.90) {
-	    return "Stuffed";
+	    return "(Stuffed)";
 	} else if (this.player.food() > this.player.maxFood() * 0.75) {
-	    return "Full";
+	    return "(Full)";
 	} else {
-	    return "";
+	    return "(Normal)";
 	}
     }
 
