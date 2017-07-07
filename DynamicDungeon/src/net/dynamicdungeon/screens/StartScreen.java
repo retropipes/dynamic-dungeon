@@ -11,6 +11,7 @@ public class StartScreen implements Screen {
     public void displayOutput(final GuiPanel terminal, final MessagePanel messages) {
 	messages.clear();
 	messages.write("Dynamic Dungeon");
+	messages.write("Press [/] or [?] for help");
 	messages.write("-- press [enter] to start --");
     }
 
