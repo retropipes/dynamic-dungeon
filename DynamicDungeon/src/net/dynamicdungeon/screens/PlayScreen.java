@@ -111,7 +111,7 @@ public class PlayScreen implements Screen {
 	    messages.write(this.messages.get(i));
 	}
 	this.messages.clear();
-	final String stats = String.format(" Health: %3d/%3d   Mana: %d/%d   Food: %d/%d %s", this.player.hp(),
+	final String stats = String.format(" Health: %3d/%3d   Mana: %d/%d   Food: %d/%d %s   (Press [/] or [?] for help)", this.player.hp(),
 		this.player.maxHp(), this.player.mana(), this.player.maxMana(), this.player.food(),
 		this.player.maxFood(), this.hunger());
 	messages.setStats(stats);
