@@ -1,9 +1,12 @@
 package net.dynamicdungeon;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.dynamicdungeon.ai.CreatureAi;
+import net.dynamicdungeon.fileio.XMLFileReader;
+import net.dynamicdungeon.fileio.XMLFileWriter;
 import net.dynamicdungeon.sound.Sound;
 import net.dynamicdungeon.world.Tile;
 import net.dynamicdungeon.world.World;
@@ -13,14 +16,14 @@ public class Creature {
     public int x;
     public int y;
     public int z;
-    private final Tile tile;
+    private Tile tile;
     private CreatureAi ai;
     private int maxHp;
     private int hp;
     private int attackValue;
     private int defenseValue;
     private int visionRadius;
-    private final String name;
+    private String name;
     private final Inventory inventory;
     private int maxFood;
     private int food;
@@ -37,6 +40,13 @@ public class Creature {
     private int maxMana;
     private int mana;
     private int detectCreatures;
+
+    public Creature(final World world) {
+	// Create an empty creature to be populated later
+	this.world = world;
+	this.inventory = new Inventory(20);
+	this.effects = new ArrayList<>();
+    }
 
     public Creature(final World world, final Tile tile, final String name, final int maxHp, final int attack,
 	    final int defense) {
@@ -648,5 +658,81 @@ public class Creature {
     public void learnName(final Item item) {
 	this.notify("The " + item.appearance() + " is a " + item.name() + "!");
 	this.ai.setName(item, item.name());
+    }
+
+    public void loadCreature(final XMLFileReader reader) throws IOException {
+	reader.readOpeningGroup("item");
+	this.tile = Tile.getFromSymbol(reader.readCustomString("tile").charAt(0));
+	this.name = reader.readCustomString("name");
+	this.maxHp = reader.readCustomInt("maxHealth");
+	this.hp = reader.readCustomInt("health");
+	this.attackValue = reader.readCustomInt("attack");
+	this.defenseValue = reader.readCustomInt("defense");
+	this.visionRadius = reader.readCustomInt("vision");
+	this.maxFood = reader.readCustomInt("maxFood");
+	this.food = reader.readCustomInt("food");
+	this.maxMana = reader.readCustomInt("maxMana");
+	this.mana = reader.readCustomInt("mana");
+	this.xp = reader.readCustomInt("xp");
+	this.level = reader.readCustomInt("level");
+	this.regenHpCooldown = reader.readCustomInt("regenHealthCooldown");
+	this.regenHpPer1000 = reader.readCustomInt("regenHealthPer1000");
+	this.regenManaCooldown = reader.readCustomInt("regenManaCooldown");
+	this.regenManaPer1000 = reader.readCustomInt("regenManaPer1000");
+	boolean hasWeapon = reader.readCustomBoolean("hasWeapon");
+	if (hasWeapon) {
+	    this.weapon = new Item();
+	    reader.readOpeningGroup("weapon");
+	    this.weapon.loadItem(reader);
+	    reader.readClosingGroup("weapon");
+	}
+	boolean hasArmor = reader.readCustomBoolean("hasArmor");
+	if (hasArmor) {
+	    this.armor = new Item();
+	    reader.readOpeningGroup("armor");
+	    this.armor.loadItem(reader);
+	    reader.readClosingGroup("armor");
+	}
+	this.inventory.loadInventory(reader);
+	// effects
+	reader.readClosingGroup("item");
+    }
+
+    public void saveCreature(final XMLFileWriter writer) throws IOException {
+	writer.writeOpeningGroup("item");
+	writer.writeCustomString(Character.toString(this.tile.getStateSymbol()), "tile");
+	writer.writeCustomString(this.name, "name");
+	writer.writeCustomInt(this.maxHp, "maxHealth");
+	writer.writeCustomInt(this.hp, "health");
+	writer.writeCustomInt(this.attackValue, "attack");
+	writer.writeCustomInt(this.defenseValue, "defense");
+	writer.writeCustomInt(this.visionRadius, "vision");
+	writer.writeCustomInt(this.maxFood, "maxFood");
+	writer.writeCustomInt(this.food, "food");
+	writer.writeCustomInt(this.maxMana, "maxMana");
+	writer.writeCustomInt(this.mana, "mana");
+	writer.writeCustomInt(this.xp, "xp");
+	writer.writeCustomInt(this.level, "level");
+	writer.writeCustomInt(this.regenHpCooldown, "regenHealthCooldown");
+	writer.writeCustomInt(this.regenHpPer1000, "regenHealthPer1000");
+	writer.writeCustomInt(this.regenManaCooldown, "regenManaCooldown");
+	writer.writeCustomInt(this.regenManaPer1000, "regenManaPer1000");
+	boolean hasWeapon = (this.weapon != null);
+	writer.writeCustomBoolean(hasWeapon, "hasWeapon");
+	if (hasWeapon) {
+	    writer.writeOpeningGroup("weapon");
+	    this.weapon.saveItem(writer);
+	    writer.writeClosingGroup("weapon");
+	}
+	boolean hasArmor = (this.armor != null);
+	writer.writeCustomBoolean(hasArmor, "hasArmor");
+	if (hasArmor) {
+	    writer.writeOpeningGroup("armor");
+	    this.armor.saveItem(writer);
+	    writer.writeClosingGroup("armor");
+	}
+	this.inventory.saveInventory(writer);
+	// effects
+	writer.writeClosingGroup("item");
     }
 }

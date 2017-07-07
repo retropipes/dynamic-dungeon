@@ -1,28 +1,29 @@
 package net.dynamicdungeon.world;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.Item;
 import net.dynamicdungeon.Point;
+import net.dynamicdungeon.fileio.XMLFileReader;
+import net.dynamicdungeon.fileio.XMLFileWriter;
 
 public class World {
-    private final Tile[][][] tiles;
-    private final Item[][][] items;
-    private final int width;
+    private Tile[][][] tiles;
+    private Item[][][] items;
+    private int width;
+    private int height;
+    private int depth;
 
     public int width() {
 	return this.width;
     }
 
-    private final int height;
-
     public int height() {
 	return this.height;
     }
-
-    private final int depth;
 
     public int depth() {
 	return this.depth;
@@ -148,5 +149,125 @@ public class World {
 
     public void add(final Creature pet) {
 	this.creatures.add(pet);
+    }
+
+    public void loadWorld(final XMLFileReader reader) throws IOException {
+	reader.readOpeningGroup("world");
+	this.loadTiles(reader);
+	this.loadItems(reader);
+	this.loadCreatures(reader);
+	reader.readClosingGroup("world");
+    }
+
+    public void saveWorld(final XMLFileWriter writer) throws IOException {
+	writer.writeOpeningGroup("world");
+	this.saveTiles(writer);
+	this.saveItems(writer);
+	this.saveCreatures(writer);
+	writer.writeClosingGroup("world");
+    }
+
+    private void loadTiles(final XMLFileReader reader) throws IOException {
+	reader.readOpeningGroup("tiles");
+	reader.readOpeningGroup("size");
+	this.width = reader.readCustomInt("width");
+	this.height = reader.readCustomInt("height");
+	this.depth = reader.readCustomInt("depth");
+	reader.readClosingGroup("size");
+	reader.readOpeningGroup("rows");
+	this.tiles = new Tile[this.width][this.height][this.depth];
+	for (int z = 0; z < this.depth; z++) {
+	    for (int y = 0; y < this.height; y++) {
+		String row = reader.readCustomString("row");
+		for (int x = 0; x < this.width; x++) {
+		    this.tiles[x][y][z] = Tile.getFromSymbol(row.charAt(x));
+		}
+	    }
+	}
+	reader.readClosingGroup("rows");
+	reader.readClosingGroup("tiles");
+    }
+
+    private void saveTiles(final XMLFileWriter writer) throws IOException {
+	writer.writeOpeningGroup("tiles");
+	writer.writeOpeningGroup("size");
+	writer.writeCustomInt(this.width, "width");
+	writer.writeCustomInt(this.height, "height");
+	writer.writeCustomInt(this.depth, "depth");
+	writer.writeClosingGroup("size");
+	writer.writeOpeningGroup("rows");
+	for (int z = 0; z < this.depth; z++) {
+	    for (int y = 0; y < this.height; y++) {
+		StringBuilder row = new StringBuilder();
+		for (int x = 0; x < this.width; x++) {
+		    if (this.tiles[x][y][z] == null) {
+			row.append("0");
+		    } else {
+			row.append(Character.toString(this.tiles[x][y][z].getStateSymbol()));
+		    }
+		}
+		writer.writeCustomString(row.toString(), "row");
+	    }
+	}
+	writer.writeClosingGroup("rows");
+	writer.writeClosingGroup("tiles");
+    }
+
+    private void loadItems(final XMLFileReader reader) throws IOException {
+	reader.readOpeningGroup("items");
+	this.items = new Item[this.width][this.height][this.depth];
+	for (int z = 0; z < this.depth; z++) {
+	    for (int y = 0; y < this.height; y++) {
+		for (int x = 0; x < this.width; x++) {
+		    boolean exists = reader.readCustomBoolean("exists");
+		    if (exists) {
+			Item i = new Item();
+			i.loadItem(reader);
+			this.items[x][y][z] = i;
+		    }
+		}
+	    }
+	}
+	reader.readClosingGroup("items");
+    }
+
+    private void saveItems(final XMLFileWriter writer) throws IOException {
+	writer.writeOpeningGroup("items");
+	for (int z = 0; z < this.depth; z++) {
+	    for (int y = 0; y < this.height; y++) {
+		for (int x = 0; x < this.width; x++) {
+		    if (this.items[x][y][z] == null) {
+			writer.writeCustomBoolean(false, "exists");
+		    } else {
+			writer.writeCustomBoolean(true, "exists");
+			this.items[x][y][z].saveItem(writer);
+		    }
+		}
+	    }
+	}
+	writer.writeClosingGroup("items");
+    }
+
+    private void loadCreatures(final XMLFileReader reader) throws IOException {
+	reader.readOpeningGroup("creatures");
+	int cSize = reader.readCustomInt("size");
+	for (int c = 0; c < cSize; c++) {
+	    Creature cr = new Creature(this);
+	    cr.loadCreature(reader);
+	    this.creatures.add(cr);
+	}
+	reader.readClosingGroup("creatures");
+    }
+
+    private void saveCreatures(final XMLFileWriter writer) throws IOException {
+	writer.writeOpeningGroup("creatures");
+	int cSize = this.creatures.size();
+	writer.writeCustomInt(cSize, "size");
+	for (int c = 0; c < cSize; c++) {
+	    Creature cr = this.creatures.get(c);
+	    cr.saveCreature(writer);
+	}
+	writer.writeClosingGroup("rows");
+	writer.writeClosingGroup("creatures");
     }
 }

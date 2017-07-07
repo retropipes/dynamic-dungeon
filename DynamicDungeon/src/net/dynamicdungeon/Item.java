@@ -1,24 +1,27 @@
 package net.dynamicdungeon;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.dynamicdungeon.fileio.XMLFileReader;
+import net.dynamicdungeon.fileio.XMLFileWriter;
 import net.dynamicdungeon.world.Tile;
 
 public class Item {
-    private final Tile tile;
+    private Tile tile;
 
     public Tile tile() {
 	return this.tile;
     }
 
-    private final String name;
+    private String name;
 
     public String name() {
 	return this.name;
     }
 
-    private final String appearance;
+    private String appearance;
 
     public String appearance() {
 	return this.appearance;
@@ -94,6 +97,11 @@ public class Item {
 	this.writtenSpells.add(new Spell(name, manaCost, effect));
     }
 
+    public Item() {
+	// Create an empty item to be populated later
+	this.writtenSpells = new ArrayList<>();
+    }
+
     public Item(final Tile tile, final String name, final String appearance) {
 	this.tile = tile;
 	this.name = name;
@@ -120,5 +128,49 @@ public class Item {
 	    details += "  food:" + this.foodValue;
 	}
 	return details;
+    }
+
+    public void loadItem(final XMLFileReader reader) throws IOException {
+	reader.readOpeningGroup("item");
+	this.tile = Tile.getFromSymbol(reader.readCustomString("tile").charAt(0));
+	this.name = reader.readCustomString("name");
+	this.appearance = reader.readCustomString("appearance");
+	this.foodValue = reader.readCustomInt("food");
+	this.attackValue = reader.readCustomInt("attack");
+	this.defenseValue = reader.readCustomInt("defense");
+	this.thrownAttackValue = reader.readCustomInt("thrown");
+	this.rangedAttackValue = reader.readCustomInt("ranged");
+	// quaff effect
+	reader.readOpeningGroup("spells");
+	int sSize = reader.readCustomInt("count");
+	for (int s = 0; s < sSize; s++) {
+	    Spell sp = new Spell();
+	    sp.loadSpell(reader);
+	    this.writtenSpells.add(sp);
+	}
+	reader.readClosingGroup("spells");
+	reader.readClosingGroup("item");
+    }
+
+    public void saveItem(final XMLFileWriter writer) throws IOException {
+	writer.writeOpeningGroup("item");
+	writer.writeCustomString(Character.toString(this.tile.getStateSymbol()), "tile");
+	writer.writeCustomString(this.name, "name");
+	writer.writeCustomString(this.appearance, "appearance");
+	writer.writeCustomInt(this.foodValue, "food");
+	writer.writeCustomInt(this.attackValue, "attack");
+	writer.writeCustomInt(this.defenseValue, "defense");
+	writer.writeCustomInt(this.thrownAttackValue, "thrown");
+	writer.writeCustomInt(this.rangedAttackValue, "ranged");
+	// quaff effect
+	writer.writeOpeningGroup("spells");
+	int sSize = this.writtenSpells.size();
+	writer.writeCustomInt(sSize, "count");
+	for (int s = 0; s < sSize; s++) {
+	    Spell sp = this.writtenSpells.get(s);
+	    sp.saveSpell(writer);
+	}
+	writer.writeClosingGroup("spells");
+	writer.writeClosingGroup("item");
     }
 }
