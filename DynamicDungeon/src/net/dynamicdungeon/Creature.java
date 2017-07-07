@@ -14,172 +14,29 @@ public class Creature {
     public int y;
     public int z;
     private final Tile tile;
-
-    public Tile tile() {
-	return this.tile;
-    }
-
     private CreatureAi ai;
-
-    public void setCreatureAi(final CreatureAi ai) {
-	this.ai = ai;
-    }
-
     private int maxHp;
-
-    public int maxHp() {
-	return this.maxHp;
-    }
-
-    public void modifyMaxHp(final int amount) {
-	this.maxHp += amount;
-    }
-
     private int hp;
-
-    public int hp() {
-	return this.hp;
-    }
-
     private int attackValue;
-
-    public void modifyAttackValue(final int value) {
-	this.attackValue += value;
-    }
-
-    public int attackValue() {
-	return this.attackValue + (this.weapon == null ? 0 : this.weapon.attackValue())
-		+ (this.armor == null ? 0 : this.armor.attackValue());
-    }
-
     private int defenseValue;
-
-    public void modifyDefenseValue(final int value) {
-	this.defenseValue += value;
-    }
-
-    public int defenseValue() {
-	return this.defenseValue + (this.weapon == null ? 0 : this.weapon.defenseValue())
-		+ (this.armor == null ? 0 : this.armor.defenseValue());
-    }
-
     private int visionRadius;
-
-    public void modifyVisionRadius(final int value) {
-	this.visionRadius += value;
-    }
-
-    public int visionRadius() {
-	return this.visionRadius;
-    }
-
     private final String name;
-
-    public String name() {
-	return this.name;
-    }
-
     private final Inventory inventory;
-
-    public Inventory inventory() {
-	return this.inventory;
-    }
-
     private int maxFood;
-
-    public int maxFood() {
-	return this.maxFood;
-    }
-
     private int food;
-
-    public int food() {
-	return this.food;
-    }
-
     private Item weapon;
-
-    public Item weapon() {
-	return this.weapon;
-    }
-
     private Item armor;
-
-    public Item armor() {
-	return this.armor;
-    }
-
     private int xp;
-
-    public int xp() {
-	return this.xp;
-    }
-
-    public void modifyXp(final int amount) {
-	this.xp += amount;
-	this.notify("You %s %d xp.", amount < 0 ? "lose" : "gain", amount);
-	while (this.xp > (int) (Math.pow(this.level, 1.75) * 25)) {
-	    if (this.isPlayer()) {
-		Sound.play("level_up");
-	    }
-	    this.level++;
-	    this.doAction("advance to level %d", this.level);
-	    this.ai.onGainLevel();
-	    this.modifyHp(this.level * 2, "Died from having a negative level?");
-	}
-    }
-
     private int level;
-
-    public int level() {
-	return this.level;
-    }
-
     private int regenHpCooldown;
     private int regenHpPer1000;
-
-    public void modifyRegenHpPer1000(final int amount) {
-	this.regenHpPer1000 += amount;
-    }
-
-    private final List<Effect> effects;
-
-    public List<Effect> effects() {
-	return this.effects;
-    }
-
-    private int maxMana;
-
-    public int maxMana() {
-	return this.maxMana;
-    }
-
-    public void modifyMaxMana(final int amount) {
-	this.maxMana += amount;
-    }
-
-    private int mana;
-
-    public int mana() {
-	return this.mana;
-    }
-
-    public void modifyMana(final int amount) {
-	this.mana = Math.max(0, Math.min(this.mana + amount, this.maxMana));
-    }
-
     private int regenManaCooldown;
     private int regenManaPer1000;
-
-    public void modifyRegenManaPer1000(final int amount) {
-	this.regenManaPer1000 += amount;
-    }
-
     private String causeOfDeath;
-
-    public String causeOfDeath() {
-	return this.causeOfDeath;
-    }
+    private final List<Effect> effects;
+    private int maxMana;
+    private int mana;
+    private int detectCreatures;
 
     public Creature(final World world, final Tile tile, final String name, final int maxHp, final int attack,
 	    final int defense) {
@@ -200,6 +57,130 @@ public class Creature {
 	this.maxMana = 5;
 	this.mana = this.maxMana;
 	this.regenManaPer1000 = 20;
+    }
+
+    public Tile tile() {
+	return this.tile;
+    }
+
+    public void setCreatureAi(final CreatureAi ai) {
+	this.ai = ai;
+    }
+
+    public int maxHp() {
+	return this.maxHp;
+    }
+
+    public void modifyMaxHp(final int amount) {
+	this.maxHp += amount;
+    }
+
+    public int hp() {
+	return this.hp;
+    }
+
+    public void modifyAttackValue(final int value) {
+	this.attackValue += value;
+    }
+
+    public int attackValue() {
+	return this.attackValue + (this.weapon == null ? 0 : this.weapon.attackValue())
+		+ (this.armor == null ? 0 : this.armor.attackValue());
+    }
+
+    public void modifyDefenseValue(final int value) {
+	this.defenseValue += value;
+    }
+
+    public int defenseValue() {
+	return this.defenseValue + (this.weapon == null ? 0 : this.weapon.defenseValue())
+		+ (this.armor == null ? 0 : this.armor.defenseValue());
+    }
+
+    public void modifyVisionRadius(final int value) {
+	this.visionRadius += value;
+    }
+
+    public int visionRadius() {
+	return this.visionRadius;
+    }
+
+    public String name() {
+	return this.name;
+    }
+
+    public Inventory inventory() {
+	return this.inventory;
+    }
+
+    public int maxFood() {
+	return this.maxFood;
+    }
+
+    public int food() {
+	return this.food;
+    }
+
+    public Item weapon() {
+	return this.weapon;
+    }
+
+    public Item armor() {
+	return this.armor;
+    }
+
+    public int xp() {
+	return this.xp;
+    }
+
+    public void modifyXp(final int amount) {
+	this.xp += amount;
+	this.notify("You %s %d xp.", amount < 0 ? "lose" : "gain", amount);
+	while (this.xp > (int) (Math.pow(this.level, 1.75) * 25)) {
+	    if (this.isPlayer()) {
+		Sound.play("level_up");
+	    }
+	    this.level++;
+	    this.doAction("advance to level %d", this.level);
+	    this.ai.onGainLevel();
+	    this.modifyHp(this.level * 2, "Died from having a negative level?");
+	}
+    }
+
+    public int level() {
+	return this.level;
+    }
+
+    public void modifyRegenHpPer1000(final int amount) {
+	this.regenHpPer1000 += amount;
+    }
+
+    public List<Effect> effects() {
+	return this.effects;
+    }
+
+    public int maxMana() {
+	return this.maxMana;
+    }
+
+    public void modifyMaxMana(final int amount) {
+	this.maxMana += amount;
+    }
+
+    public int mana() {
+	return this.mana;
+    }
+
+    public void modifyMana(final int amount) {
+	this.mana = Math.max(0, Math.min(this.mana + amount, this.maxMana));
+    }
+
+    public void modifyRegenManaPer1000(final int amount) {
+	this.regenManaPer1000 += amount;
+    }
+
+    public String causeOfDeath() {
+	return this.causeOfDeath;
     }
 
     public void moveBy(final int mx, final int my, final int mz) {
@@ -633,8 +614,6 @@ public class Creature {
     public void summon(final Creature other) {
 	this.world.add(other);
     }
-
-    private int detectCreatures;
 
     public void modifyDetectCreatures(final int amount) {
 	this.detectCreatures += amount;
