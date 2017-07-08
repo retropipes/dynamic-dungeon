@@ -31,6 +31,11 @@ public class World {
 
     private final List<Creature> creatures;
 
+    public World() {
+	// Create an empty World, to be populated later
+	this.creatures = new ArrayList<>();
+    }
+
     public World(final Tile[][][] tiles) {
 	this.tiles = tiles;
 	this.width = tiles.length;

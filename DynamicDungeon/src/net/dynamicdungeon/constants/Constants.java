@@ -11,4 +11,6 @@ public class Constants {
     public static final int WORLD_REGION_TRIM_SIZE = 25;
     public static final int WORLD_SMOOTHING_PASSES = 8;
     public static final int WORLD_CONNECT_DOWN_MIN_SIZE = 250;
+    public static final String SAVE_FILE_EXTENSION = "ddd";
+    public static final String SAVE_FILE_DOC_TAG = "dynamicDungeon";
 }

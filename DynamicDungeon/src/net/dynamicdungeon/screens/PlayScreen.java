@@ -1,7 +1,11 @@
 package net.dynamicdungeon.screens;
 
+import java.awt.FileDialog;
+import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +15,8 @@ import net.dynamicdungeon.FieldOfView;
 import net.dynamicdungeon.Item;
 import net.dynamicdungeon.StuffFactory;
 import net.dynamicdungeon.constants.Constants;
+import net.dynamicdungeon.fileio.FilenameChecker;
+import net.dynamicdungeon.fileio.XMLFileWriter;
 import net.dynamicdungeon.panels.GuiPanel;
 import net.dynamicdungeon.panels.MessagePanel;
 import net.dynamicdungeon.world.Tile;
@@ -251,7 +257,26 @@ public class PlayScreen implements Screen {
 			    this.player.y - this.getScrollY());
 		    break;
 		case KeyEvent.VK_S:
-		    // TODO: Save game
+		    final FileDialog fd = new FileDialog((Frame) null, "Save Game", FileDialog.SAVE);
+		    String filename, extension, file, dir;
+		    fd.setVisible(true);
+		    file = fd.getFile();
+		    dir = fd.getDirectory();
+		    if (file != null && dir != null) {
+			filename = dir + file;
+			extension = PlayScreen.getExtension(filename);
+			if (extension.equals(Constants.SAVE_FILE_EXTENSION)) {
+			    if (FilenameChecker.isFilenameOK(
+				    PlayScreen.getNameWithoutExtension(PlayScreen.getFileNameOnly(filename)))) {
+				try {
+				    XMLFileWriter writer = new XMLFileWriter(filename, Constants.SAVE_FILE_DOC_TAG);
+				    this.world.saveWorld(writer);
+				} catch (IOException ioe) {
+				    // Failed
+				}
+			    }
+			}
+		    }
 		    break;
 		}
 		switch (key.getKeyChar()) {
@@ -302,5 +327,36 @@ public class PlayScreen implements Screen {
 	}
 	this.player.modifyHp(0, "Died while cowardly fleeing the caves.");
 	return new LoseScreen(this.player);
+    }
+
+    private static String getExtension(final String s) {
+	String ext = null;
+	final int i = s.lastIndexOf('.');
+	if ((i > 0) && (i < s.length() - 1)) {
+	    ext = s.substring(i + 1).toLowerCase();
+	}
+	return ext;
+    }
+
+    private static String getNameWithoutExtension(final String s) {
+	String ext = null;
+	final int i = s.lastIndexOf('.');
+	if ((i > 0) && (i < s.length() - 1)) {
+	    ext = s.substring(0, i);
+	} else {
+	    ext = s;
+	}
+	return ext;
+    }
+
+    private static String getFileNameOnly(final String s) {
+	String fno = null;
+	final int i = s.lastIndexOf(File.separatorChar);
+	if ((i > 0) && (i < s.length() - 1)) {
+	    fno = s.substring(i + 1);
+	} else {
+	    fno = s;
+	}
+	return fno;
     }
 }
