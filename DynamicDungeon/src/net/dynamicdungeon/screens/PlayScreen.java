@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.dynamicdungeon.Creature;
+import net.dynamicdungeon.Effect;
 import net.dynamicdungeon.FieldOfView;
 import net.dynamicdungeon.Item;
 import net.dynamicdungeon.StuffFactory;
@@ -33,6 +34,7 @@ public class PlayScreen implements Screen {
 	this.createWorld();
 	this.fov = new FieldOfView(this.world);
 	final StuffFactory factory = new StuffFactory(this.world);
+	Effect.setStuffFactory(factory);
 	this.createCreatures(factory);
 	this.createItems(factory);
 	this.firstTimeFlag = false;
@@ -45,6 +47,7 @@ public class PlayScreen implements Screen {
 	this.createWorld();
 	this.fov = new FieldOfView(this.world);
 	final StuffFactory factory = new StuffFactory(this.world);
+	Effect.setStuffFactory(factory);
 	this.createCreatures(factory);
 	this.createItems(factory);
 	this.firstTimeFlag = first;
@@ -111,7 +114,8 @@ public class PlayScreen implements Screen {
 	    messages.write(this.messages.get(i));
 	}
 	this.messages.clear();
-	final String stats = String.format(" Health: %3d/%3d   Mana: %d/%d   Food: %d/%d %s   (Press [/] or [?] for help)", this.player.hp(),
+	final String stats = String.format(
+		" Health: %3d/%3d   Mana: %d/%d   Food: %d/%d %s   (Press [/] or [?] for help)", this.player.hp(),
 		this.player.maxHp(), this.player.mana(), this.player.maxMana(), this.player.food(),
 		this.player.maxFood(), this.hunger());
 	messages.setStats(stats);

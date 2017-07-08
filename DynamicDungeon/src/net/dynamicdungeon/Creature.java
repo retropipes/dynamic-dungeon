@@ -661,7 +661,7 @@ public class Creature {
     }
 
     public void loadCreature(final XMLFileReader reader) throws IOException {
-	reader.readOpeningGroup("item");
+	reader.readOpeningGroup("creature");
 	this.tile = Tile.getFromSymbol(reader.readCustomString("tile").charAt(0));
 	this.name = reader.readCustomString("name");
 	this.maxHp = reader.readCustomInt("maxHealth");
@@ -694,12 +694,20 @@ public class Creature {
 	    reader.readClosingGroup("armor");
 	}
 	this.inventory.loadInventory(reader);
-	// effects
-	reader.readClosingGroup("item");
+	reader.readOpeningGroup("effects");
+	int efSize = reader.readCustomInt("size");
+	this.effects.clear();
+	for (int e = 0; e < efSize; e++) {
+	    Effect ef = new Effect((Item) null);
+	    ef.loadEffect(reader);
+	    this.effects.add(ef);
+	}
+	reader.readClosingGroup("effects");
+	reader.readClosingGroup("creature");
     }
 
     public void saveCreature(final XMLFileWriter writer) throws IOException {
-	writer.writeOpeningGroup("item");
+	writer.writeOpeningGroup("creature");
 	writer.writeCustomString(Character.toString(this.tile.getStateSymbol()), "tile");
 	writer.writeCustomString(this.name, "name");
 	writer.writeCustomInt(this.maxHp, "maxHealth");
@@ -732,7 +740,14 @@ public class Creature {
 	    writer.writeClosingGroup("armor");
 	}
 	this.inventory.saveInventory(writer);
-	// effects
-	writer.writeClosingGroup("item");
+	writer.writeOpeningGroup("effects");
+	int efSize = this.effects.size();
+	writer.writeCustomInt(efSize, "size");
+	for (int e = 0; e < efSize; e++) {
+	    Effect ef = this.effects.get(e);
+	    ef.saveEffect(writer);
+	}
+	writer.writeClosingGroup("effects");
+	writer.writeClosingGroup("creature");
     }
 }

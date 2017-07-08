@@ -140,7 +140,12 @@ public class Item {
 	this.defenseValue = reader.readCustomInt("defense");
 	this.thrownAttackValue = reader.readCustomInt("thrown");
 	this.rangedAttackValue = reader.readCustomInt("ranged");
-	// quaff effect
+	boolean effectExists = reader.readCustomBoolean("effectExists");
+	if (effectExists) {
+	    Effect ef = new Effect(this);
+	    ef.loadEffect(reader);
+	    this.quaffEffect = ef;
+	}
 	reader.readOpeningGroup("spells");
 	int sSize = reader.readCustomInt("count");
 	for (int s = 0; s < sSize; s++) {
@@ -162,7 +167,11 @@ public class Item {
 	writer.writeCustomInt(this.defenseValue, "defense");
 	writer.writeCustomInt(this.thrownAttackValue, "thrown");
 	writer.writeCustomInt(this.rangedAttackValue, "ranged");
-	// quaff effect
+	boolean effectExists = (this.quaffEffect != null);
+	writer.writeCustomBoolean(effectExists, "effectExists");
+	if (effectExists) {
+	    this.quaffEffect.saveEffect(writer);
+	}
 	writer.writeOpeningGroup("spells");
 	int sSize = this.writtenSpells.size();
 	writer.writeCustomInt(sSize, "count");

@@ -42,7 +42,9 @@ public class Spell {
 	reader.readOpeningGroup("spell");
 	this.name = reader.readCustomString("name");
 	this.manaCost = reader.readCustomInt("manaCost");
-	// effect
+	Effect ef = new Effect((Item) null);
+	ef.loadEffect(reader);
+	this.effect = ef;
 	reader.readClosingGroup("spell");
     }
 
@@ -50,7 +52,7 @@ public class Spell {
 	writer.writeOpeningGroup("spell");
 	writer.writeCustomString(this.name, "name");
 	writer.writeCustomInt(this.manaCost, "manaCost");
-	// effect
+	this.effect.saveEffect(writer);
 	writer.writeClosingGroup("spell");
     }
 }
