@@ -41,6 +41,7 @@ public class DynamicDungeon extends JFrame implements KeyListener, MouseListener
     public void repaint() {
 	this.terminal.clear();
 	this.screen.displayOutput(this.terminal, this.messages);
+	this.pack();
 	super.repaint();
     }
 
@@ -48,7 +49,6 @@ public class DynamicDungeon extends JFrame implements KeyListener, MouseListener
     public void keyPressed(final KeyEvent e) {
 	if (!e.isMetaDown()) {
 	    this.screen = this.screen.respondToUserInput(e, null);
-	    this.pack();
 	    this.repaint();
 	}
     }
