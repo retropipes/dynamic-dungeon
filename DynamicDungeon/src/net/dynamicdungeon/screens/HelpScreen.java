@@ -24,6 +24,7 @@ public class HelpScreen implements Screen {
 	messages.write("[r] to read something");
 	messages.write("[<] or [ [ ] to go down stairs; [>] or [ ] ] to go up stairs");
 	messages.write("arrow keys, numeric keypad, or [hlkjyubn] to move");
+	messages.write("[s] to save your game");
 	messages.write("-- press any key to continue --");
     }
 

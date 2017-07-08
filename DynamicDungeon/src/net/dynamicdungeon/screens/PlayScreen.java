@@ -40,11 +40,15 @@ public class PlayScreen implements Screen {
 	this.firstTimeFlag = false;
     }
 
-    public PlayScreen(final boolean first) {
+    public PlayScreen(final boolean first, final World saved) {
 	this.screenWidth = Constants.SCREEN_WIDTH_IN_TILES;
 	this.screenHeight = Constants.SCREEN_HEIGHT_IN_TILES;
 	this.messages = new ArrayList<>();
-	this.createWorld();
+	if (saved != null) {
+	    this.world = saved;
+	} else {
+	    this.createWorld();
+	}
 	this.fov = new FieldOfView(this.world);
 	final StuffFactory factory = new StuffFactory(this.world);
 	Effect.setStuffFactory(factory);
@@ -246,6 +250,9 @@ public class PlayScreen implements Screen {
 		    this.subscreen = new ReadScreen(this.player, this.player.x - this.getScrollX(),
 			    this.player.y - this.getScrollY());
 		    break;
+		case KeyEvent.VK_S:
+		    // TODO: Save game
+		    break;
 		}
 		switch (key.getKeyChar()) {
 		case 'g':
@@ -289,7 +296,7 @@ public class PlayScreen implements Screen {
 
     private Screen userExits() {
 	for (final Item item : this.player.inventory().getItems()) {
-	    if (item != null && item.name().equals("teddy bear")) {
+	    if (item != null && item.name().equals("amulet")) {
 		return new WinScreen();
 	    }
 	}
