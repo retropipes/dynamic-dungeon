@@ -265,15 +265,17 @@ public class PlayScreen implements Screen {
 		    if (file != null && dir != null) {
 			filename = dir + file;
 			extension = PlayScreen.getExtension(filename);
-			if (extension.equals(Constants.SAVE_FILE_EXTENSION)) {
-			    if (FilenameChecker.isFilenameOK(
-				    PlayScreen.getNameWithoutExtension(PlayScreen.getFileNameOnly(filename)))) {
-				try {
-				    XMLFileWriter writer = new XMLFileWriter(filename, Constants.SAVE_FILE_DOC_TAG);
-				    this.world.saveWorld(writer);
-				} catch (IOException ioe) {
-				    // Failed
-				}
+			if (extension == null || !extension.equals(Constants.SAVE_FILE_EXTENSION)) {
+			    file += Constants.SAVE_FILE_EXTENSION_PERIOD;
+			    filename = dir + file;
+			}
+			if (FilenameChecker.isFilenameOK(
+				PlayScreen.getNameWithoutExtension(PlayScreen.getFileNameOnly(filename)))) {
+			    try {
+				XMLFileWriter writer = new XMLFileWriter(filename, Constants.SAVE_FILE_DOC_TAG);
+				PlayScreen.this.world.saveWorld(writer);
+			    } catch (IOException ioe) {
+				// Failed
 			    }
 			}
 		    }

@@ -199,8 +199,14 @@ public final class Effect {
 	this.defenseModifier = reader.readCustomInt("defenseModifier");
 	this.hpModifierOngoing = reader.readCustomInt("healthModifierOngoing");
 	this.manaModifierOngoing = reader.readCustomInt("manaModifierOngoing");
-	this.hpModifierOngoingMessage = reader.readCustomString("healthModifierOngoingMessage");
-	this.itemMessage = reader.readCustomString("itemMessage");
+	boolean hpModOMPresent = reader.readCustomBoolean("hpModOMPresent");
+	if (hpModOMPresent) {
+	    this.hpModifierOngoingMessage = reader.readCustomString("healthModifierOngoingMessage");
+	}
+	boolean imPresent = reader.readCustomBoolean("imPresent");
+	if (imPresent) {
+	    this.itemMessage = reader.readCustomString("itemMessage");
+	}
 	this.visionModifier = reader.readCustomInt("visionModifier");
 	this.regenHpModifier = reader.readCustomInt("regenHealthModifier");
 	this.regenManaModifier = reader.readCustomInt("regenManaModifier");
@@ -208,7 +214,10 @@ public final class Effect {
 	this.blink = reader.readCustomBoolean("blinkFlag");
 	this.summonBats = reader.readCustomBoolean("summonBatsFlag");
 	this.detect = reader.readCustomBoolean("detectFlag");
-	this.itemMessageEnd = reader.readCustomString("itemMessageEnd");
+	boolean imePresent = reader.readCustomBoolean("imePresent");
+	if (imePresent) {
+	    this.itemMessageEnd = reader.readCustomString("itemMessageEnd");
+	}
 	reader.readClosingGroup("effect");
     }
 
@@ -219,8 +228,16 @@ public final class Effect {
 	writer.writeCustomInt(this.defenseModifier, "defenseModifier");
 	writer.writeCustomInt(this.hpModifierOngoing, "healthModifierOngoing");
 	writer.writeCustomInt(this.manaModifierOngoing, "manaModifierOngoing");
-	writer.writeCustomString(this.hpModifierOngoingMessage, "healthModifierOngoingMessage");
-	writer.writeCustomString(this.itemMessage, "itemMessage");
+	boolean hpModOMPresent = (this.hpModifierOngoingMessage != null);
+	writer.writeCustomBoolean(hpModOMPresent, "hpModOMPresent");
+	if (hpModOMPresent) {
+	    writer.writeCustomString(this.hpModifierOngoingMessage, "healthModifierOngoingMessage");
+	}
+	boolean imPresent = (this.itemMessage != null);
+	writer.writeCustomBoolean(imPresent, "imPresent");
+	if (imPresent) {
+	    writer.writeCustomString(this.itemMessage, "itemMessage");
+	}
 	writer.writeCustomInt(this.visionModifier, "visionModifier");
 	writer.writeCustomInt(this.regenHpModifier, "regenHealthModifier");
 	writer.writeCustomInt(this.regenManaModifier, "regenManaModifier");
@@ -228,7 +245,11 @@ public final class Effect {
 	writer.writeCustomBoolean(this.blink, "blinkFlag");
 	writer.writeCustomBoolean(this.summonBats, "summonBatsFlag");
 	writer.writeCustomBoolean(this.detect, "detectFlag");
-	writer.writeCustomString(this.itemMessageEnd, "itemMessageEnd");
+	boolean imePresent = (this.itemMessageEnd != null);
+	writer.writeCustomBoolean(imPresent, "imePresent");
+	if (imePresent) {
+	    writer.writeCustomString(this.itemMessageEnd, "itemMessageEnd");
+	}
 	writer.writeClosingGroup("effect");
     }
 }
