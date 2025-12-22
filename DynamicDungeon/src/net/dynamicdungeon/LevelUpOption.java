@@ -3,13 +3,13 @@ package net.dynamicdungeon;
 public abstract class LevelUpOption {
     private final String name;
 
-    public String name() {
-	return this.name;
-    }
-
-    public LevelUpOption(final String name) {
-	this.name = name;
+    public LevelUpOption(final String theName) {
+	this.name = theName;
     }
 
     public abstract void invoke(Creature creature);
+
+    public String name() {
+	return this.name;
+    }
 }

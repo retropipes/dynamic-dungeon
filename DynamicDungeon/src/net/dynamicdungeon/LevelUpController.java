@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelUpController {
-    private static LevelUpOption[] options = new LevelUpOption[] { new LevelUpOption("Increased hit points") {
+    private static LevelUpOption[] options = { new LevelUpOption("Increased hit points") {
 	@Override
 	public void invoke(final Creature creature) {
 	    creature.modifyMaxHp(10);
@@ -54,14 +54,6 @@ public class LevelUpController {
 	LevelUpController.options[(int) (Math.random() * LevelUpController.options.length)].invoke(creature);
     }
 
-    public List<String> getLevelUpOptions() {
-	final List<String> names = new ArrayList<>();
-	for (final LevelUpOption option : LevelUpController.options) {
-	    names.add(option.name());
-	}
-	return names;
-    }
-
     public LevelUpOption getLevelUpOption(final String name) {
 	for (final LevelUpOption option : LevelUpController.options) {
 	    if (option.name().equals(name)) {
@@ -69,5 +61,13 @@ public class LevelUpController {
 	    }
 	}
 	return null;
+    }
+
+    public List<String> getLevelUpOptions() {
+	final List<String> names = new ArrayList<>();
+	for (final LevelUpOption option : LevelUpController.options) {
+	    names.add(option.name());
+	}
+	return names;
     }
 }

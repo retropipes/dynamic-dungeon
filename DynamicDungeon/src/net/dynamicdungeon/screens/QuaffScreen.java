@@ -4,8 +4,8 @@ import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.Item;
 
 public class QuaffScreen extends InventoryBasedScreen {
-    public QuaffScreen(final Creature player) {
-	super(player);
+    public QuaffScreen(final Creature thePlayer) {
+	super(thePlayer);
     }
 
     @Override

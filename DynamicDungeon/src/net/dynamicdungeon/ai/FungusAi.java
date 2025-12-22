@@ -7,9 +7,9 @@ public class FungusAi extends CreatureAi {
     private final StuffFactory factory;
     private int spreadcount;
 
-    public FungusAi(final Creature creature, final StuffFactory factory) {
-	super(creature);
-	this.factory = factory;
+    public FungusAi(final Creature theCreature, final StuffFactory theFactory) {
+	super(theCreature);
+	this.factory = theFactory;
     }
 
     @Override
@@ -20,13 +20,13 @@ public class FungusAi extends CreatureAi {
     }
 
     private void spread() {
-	final int x = this.creature.x + (int) (Math.random() * 11) - 5;
-	final int y = this.creature.y + (int) (Math.random() * 11) - 5;
+	final var x = this.creature.x + (int) (Math.random() * 11) - 5;
+	final var y = this.creature.y + (int) (Math.random() * 11) - 5;
 	if (!this.creature.canEnter(x, y, this.creature.z)) {
 	    return;
 	}
 	this.creature.doAction("spawn a child");
-	final Creature child = this.factory.newFungus(this.creature.z);
+	final var child = this.factory.newFungus(this.creature.z);
 	child.x = x;
 	child.y = y;
 	child.z = this.creature.z;

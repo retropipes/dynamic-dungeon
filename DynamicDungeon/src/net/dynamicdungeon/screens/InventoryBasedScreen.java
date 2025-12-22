@@ -13,20 +13,14 @@ public abstract class InventoryBasedScreen implements Screen {
     protected Creature player;
     private final String letters;
 
-    protected abstract String getVerb();
-
-    protected abstract boolean isAcceptable(Item item);
-
-    protected abstract Screen use(Item item);
-
-    public InventoryBasedScreen(final Creature player) {
-	this.player = player;
+    public InventoryBasedScreen(final Creature thePlayer) {
+	this.player = thePlayer;
 	this.letters = "abcdefghijklmnopqrstuvwxyz";
     }
 
     @Override
     public void displayOutput(final GuiPanel terminal, final MessagePanel messages) {
-	final ArrayList<String> lines = this.getList();
+	final var lines = this.getList();
 	for (final String line : lines) {
 	    messages.write(line);
 	}
@@ -34,37 +28,43 @@ public abstract class InventoryBasedScreen implements Screen {
     }
 
     private ArrayList<String> getList() {
-	final ArrayList<String> lines = new ArrayList<>();
-	final Item[] inventory = this.player.inventory().getItems();
-	for (int i = 0; i < inventory.length; i++) {
-	    final Item item = inventory[i];
+	final var lines = new ArrayList<String>();
+	final var inventory = this.player.inventory().getItems();
+	for (var i = 0; i < inventory.length; i++) {
+	    final var item = inventory[i];
 	    if (item == null || !this.isAcceptable(item)) {
 		continue;
 	    }
-	    String line = this.letters.charAt(i) + " " + this.player.nameOf(item);
+	    final var line = new StringBuilder().append(this.letters.charAt(i)).append(" ")
+		    .append(this.player.nameOf(item));
 	    if (item == this.player.weapon() || item == this.player.armor()) {
-		line += " (equipped)";
+		line.append(" (equipped)");
 	    }
-	    lines.add(line);
+	    lines.add(line.toString());
 	}
 	return lines;
     }
 
+    protected abstract String getVerb();
+
+    protected abstract boolean isAcceptable(Item item);
+
     @Override
     public Screen respondToUserInput(final KeyEvent key, final MouseEvent mouse) {
-	if (key != null) {
-	    final char c = key.getKeyChar();
-	    final Item[] items = this.player.inventory().getItems();
-	    if (this.letters.indexOf(c) > -1 && items.length > this.letters.indexOf(c)
-		    && items[this.letters.indexOf(c)] != null && this.isAcceptable(items[this.letters.indexOf(c)])) {
-		return this.use(items[this.letters.indexOf(c)]);
-	    } else if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
-		return null;
-	    } else {
-		return this;
-	    }
-	} else {
+	if (key == null) {
 	    return this;
 	}
+	final var c = key.getKeyChar();
+	final var items = this.player.inventory().getItems();
+	if (this.letters.indexOf(c) > -1 && items.length > this.letters.indexOf(c)
+		&& items[this.letters.indexOf(c)] != null && this.isAcceptable(items[this.letters.indexOf(c)])) {
+	    return this.use(items[this.letters.indexOf(c)]);
+	}
+	if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
+	    return null;
+	}
+	return this;
     }
+
+    protected abstract Screen use(Item item);
 }

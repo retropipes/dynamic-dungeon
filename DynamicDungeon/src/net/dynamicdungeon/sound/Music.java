@@ -11,6 +11,26 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
 public class Music {
+    private static SourceDataLine getLine(final AudioFormat audioFormat) throws LineUnavailableException {
+	final var info = new DataLine.Info(SourceDataLine.class, audioFormat);
+	final var res = (SourceDataLine) AudioSystem.getLine(info);
+	res.open(audioFormat);
+	return res;
+    }
+
+    public static void play() {
+	final var m = new Music(Music.class.getResource("/assets/music/dungeon.ogg"));
+	final Thread t = new Thread() {
+	    @Override
+	    public void run() {
+		m.playLoop();
+	    }
+	};
+	t.setName("Music Player");
+	t.setDaemon(true);
+	t.start();
+    }
+
     // Fields
     private final URL url;
     private AudioInputStream stream;
@@ -22,19 +42,6 @@ public class Music {
     public Music(final URL loc) {
 	this.url = loc;
 	this.stop = false;
-    }
-
-    public static void play() {
-	final Music m = new Music(Music.class.getResource("/assets/music/dungeon.ogg"));
-	final Thread t = new Thread() {
-	    @Override
-	    public void run() {
-		m.playLoop();
-	    }
-	};
-	t.setName("Music Player");
-	t.setDaemon(true);
-	t.start();
     }
 
     public void playLoop() {
@@ -55,13 +62,13 @@ public class Music {
 	    } catch (final Exception e) {
 		// Do nothing
 	    }
-	    try (SourceDataLine line = Music.getLine(this.decodedFormat)) {
+	    try (var line = Music.getLine(this.decodedFormat)) {
 		if (line != null) {
 		    try {
-			final byte[] data = new byte[4096];
+			final var data = new byte[4096];
 			// Start
 			line.start();
-			int nBytesRead = 0;
+			var nBytesRead = 0;
 			while (nBytesRead != -1) {
 			    nBytesRead = this.decodedStream.read(data, 0, data.length);
 			    if (nBytesRead != -1) {
@@ -86,14 +93,6 @@ public class Music {
 		// Do nothing
 	    }
 	}
-    }
-
-    private static SourceDataLine getLine(final AudioFormat audioFormat) throws LineUnavailableException {
-	SourceDataLine res = null;
-	final DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-	res = (SourceDataLine) AudioSystem.getLine(info);
-	res.open(audioFormat);
-	return res;
     }
 
     public void stopLoop() {

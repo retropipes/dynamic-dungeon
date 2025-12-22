@@ -3,8 +3,6 @@ package net.dynamicdungeon.sound;
 import java.io.File;
 import java.io.IOException;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
@@ -22,21 +20,26 @@ class SoundFile extends SoundFactory {
     }
 
     @Override
+    int getNumber() {
+	return this.number;
+    }
+
+    @Override
     public void run() {
 	if (this.filename != null) {
-	    final File soundFile = new File(this.filename);
+	    final var soundFile = new File(this.filename);
 	    if (!soundFile.exists()) {
 		SoundFactory.taskCompleted(this.number);
 		return;
 	    }
-	    try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile)) {
-		final AudioFormat format = audioInputStream.getFormat();
-		final DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
-		try (SourceDataLine auline = (SourceDataLine) AudioSystem.getLine(info)) {
+	    try (var audioInputStream = AudioSystem.getAudioInputStream(soundFile)) {
+		final var format = audioInputStream.getFormat();
+		final var info = new DataLine.Info(SourceDataLine.class, format);
+		try (var auline = (SourceDataLine) AudioSystem.getLine(info)) {
 		    auline.open(format);
 		    auline.start();
-		    int nBytesRead = 0;
-		    final byte[] abData = new byte[SoundFactory.EXTERNAL_BUFFER_SIZE];
+		    var nBytesRead = 0;
+		    final var abData = new byte[SoundFactory.EXTERNAL_BUFFER_SIZE];
 		    try {
 			while (nBytesRead != -1) {
 			    nBytesRead = audioInputStream.read(abData, 0, abData.length);
@@ -65,12 +68,7 @@ class SoundFile extends SoundFactory {
 		    SoundFactory.taskCompleted(this.number);
 		    return;
 		}
-	    } catch (final UnsupportedAudioFileException e1) {
-		SoundFactory.taskCompleted(this.number);
-		return;
-	    } catch (final IOException e1) {
-		SoundFactory.taskCompleted(this.number);
-		return;
+	    } catch (final UnsupportedAudioFileException | IOException e1) {
 	    }
 	}
 	SoundFactory.taskCompleted(this.number);
@@ -79,11 +77,6 @@ class SoundFile extends SoundFactory {
     @Override
     public void stopLoop() {
 	// Do nothing
-    }
-
-    @Override
-    int getNumber() {
-	return this.number;
     }
 
     @Override

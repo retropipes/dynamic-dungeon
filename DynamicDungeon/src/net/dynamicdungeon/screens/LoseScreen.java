@@ -11,8 +11,8 @@ import net.dynamicdungeon.sound.Sound;
 public class LoseScreen implements Screen {
     private final Creature player;
 
-    public LoseScreen(final Creature player) {
-	this.player = player;
+    public LoseScreen(final Creature thePlayer) {
+	this.player = thePlayer;
     }
 
     @Override

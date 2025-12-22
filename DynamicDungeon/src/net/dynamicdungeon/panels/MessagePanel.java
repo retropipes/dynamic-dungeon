@@ -18,7 +18,6 @@ public class MessagePanel extends JPanel {
      * Class constructor.
      */
     public MessagePanel() {
-	super();
 	this.message.setEditable(false);
 	this.message.setFocusable(false);
 	this.message.setBackground(this.getBackground());
@@ -30,39 +29,38 @@ public class MessagePanel extends JPanel {
 	return this;
     }
 
-    /**
-     * Write a string to the message panel, appending to what's already there.
-     *
-     * @param character
-     *            the character to write
-     * @return this for convenient chaining of method calls
-     */
-    public MessagePanel write(final String string) {
-	if (this.isFull()) {
-	    this.message.setText("");
-	}
-	final String currText = this.message.getText();
-	if (currText.isEmpty()) {
-	    this.message.setText(string);
-	} else {
-	    this.message.setText(currText + "\n" + string);
-	}
-	return this;
+    public void clearStats() {
+	this.stats.setText("");
     }
 
     public JLabel getStatsLabel() {
 	return this.stats;
     }
 
-    public void clearStats() {
-	this.stats.setText("");
-    }
-
-    public void setStats(final String stats) {
-	this.stats.setText(stats);
-    }
-
     private boolean isFull() {
 	return this.message.getText().split("\\n").length >= this.full;
+    }
+
+    public void setStats(final String theStats) {
+	this.stats.setText(theStats);
+    }
+
+    /**
+     * Write a string to the message panel, appending to what's already there.
+     *
+     * @param character the character to write
+     * @return this for convenient chaining of method calls
+     */
+    public MessagePanel write(final String string) {
+	if (this.isFull()) {
+	    this.message.setText("");
+	}
+	final var currText = this.message.getText();
+	if (currText.isEmpty()) {
+	    this.message.setText(string);
+	} else {
+	    this.message.setText(currText + "\n" + string);
+	}
+	return this;
     }
 }

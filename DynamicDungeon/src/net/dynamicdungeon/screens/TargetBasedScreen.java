@@ -16,11 +16,11 @@ public abstract class TargetBasedScreen implements Screen {
     private int x;
     private int y;
 
-    public TargetBasedScreen(final Creature player, final String caption, final int sx, final int sy) {
-	this.player = player;
-	this.caption = caption;
-	this.sx = sx;
-	this.sy = sy;
+    public TargetBasedScreen(final Creature thePlayer, final String theCaption, final int nsx, final int nsy) {
+	this.player = thePlayer;
+	this.caption = theCaption;
+	this.sx = nsx;
+	this.sy = nsy;
     }
 
     @Override
@@ -28,10 +28,27 @@ public abstract class TargetBasedScreen implements Screen {
 	messages.write(this.caption);
     }
 
+    /**
+     * @param wx
+     * @param wy
+     * @param wscreenX
+     * @param wscreenY
+     */
+    public void enterWorldCoordinate(final int wx, final int wy, final int wscreenX, final int wscreenY) {
+    }
+
+    /**
+     * @param ax
+     * @param ay
+     */
+    public boolean isAcceptable(final int ax, final int ay) {
+	return true;
+    }
+
     @Override
     public Screen respondToUserInput(final KeyEvent key, final MouseEvent mouse) {
-	final int px = this.x;
-	final int py = this.y;
+	final var px = this.x;
+	final var py = this.y;
 	if (key != null) {
 	    switch (key.getKeyCode()) {
 	    case KeyEvent.VK_LEFT:
@@ -80,6 +97,8 @@ public abstract class TargetBasedScreen implements Screen {
 		return null;
 	    case KeyEvent.VK_ESCAPE:
 		return null;
+	    default:
+		break;
 	    }
 	}
 	if (mouse != null) {
@@ -89,11 +108,10 @@ public abstract class TargetBasedScreen implements Screen {
 		this.x = px;
 		this.y = py;
 		return this;
-	    } else {
-		this.selectWorldCoordinate(this.player.x + this.x, this.player.y + this.y, this.sx + this.x,
-			this.sy + this.y);
-		return null;
 	    }
+	    this.selectWorldCoordinate(this.player.x + this.x, this.player.y + this.y, this.sx + this.x,
+		    this.sy + this.y);
+	    return null;
 	}
 	if (!this.isAcceptable(this.player.x + this.x, this.player.y + this.y)) {
 	    this.x = px;
@@ -103,13 +121,12 @@ public abstract class TargetBasedScreen implements Screen {
 	return this;
     }
 
-    public boolean isAcceptable(final int x, final int y) {
-	return true;
-    }
-
-    public void enterWorldCoordinate(final int x, final int y, final int screenX, final int screenY) {
-    }
-
-    public void selectWorldCoordinate(final int x, final int y, final int screenX, final int screenY) {
+    /**
+     * @param wx
+     * @param wy
+     * @param wscreenX
+     * @param wscreenY
+     */
+    public void selectWorldCoordinate(final int wx, final int wy, final int wscreenX, final int wscreenY) {
     }
 }

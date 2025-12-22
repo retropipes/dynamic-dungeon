@@ -4,8 +4,8 @@ import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.Item;
 
 public class EatScreen extends InventoryBasedScreen {
-    public EatScreen(final Creature player) {
-	super(player);
+    public EatScreen(final Creature thePlayer) {
+	super(thePlayer);
     }
 
     @Override

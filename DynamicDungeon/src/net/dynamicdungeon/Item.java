@@ -10,124 +10,67 @@ import net.dynamicdungeon.world.Tile;
 
 public class Item {
     private Tile tile;
-
-    public Tile tile() {
-	return this.tile;
-    }
-
     private String name;
-
-    public String name() {
-	return this.name;
-    }
-
     private String appearance;
-
-    public String appearance() {
-	return this.appearance;
-    }
-
     private int foodValue;
-
-    public int foodValue() {
-	return this.foodValue;
-    }
-
-    public void modifyFoodValue(final int amount) {
-	this.foodValue += amount;
-    }
-
     private int attackValue;
-
-    public int attackValue() {
-	return this.attackValue;
-    }
-
-    public void modifyAttackValue(final int amount) {
-	this.attackValue += amount;
-    }
-
     private int defenseValue;
-
-    public int defenseValue() {
-	return this.defenseValue;
-    }
-
-    public void modifyDefenseValue(final int amount) {
-	this.defenseValue += amount;
-    }
-
     private int thrownAttackValue;
-
-    public int thrownAttackValue() {
-	return this.thrownAttackValue;
-    }
-
-    public void modifyThrownAttackValue(final int amount) {
-	this.thrownAttackValue += amount;
-    }
-
     private int rangedAttackValue;
-
-    public int rangedAttackValue() {
-	return this.rangedAttackValue;
-    }
-
-    public void modifyRangedAttackValue(final int amount) {
-	this.rangedAttackValue += amount;
-    }
-
     private Effect quaffEffect;
-
-    public Effect quaffEffect() {
-	return this.quaffEffect;
-    }
-
-    public void setQuaffEffect(final Effect effect) {
-	this.quaffEffect = effect;
-    }
-
     private final List<Spell> writtenSpells;
-
-    public List<Spell> writtenSpells() {
-	return this.writtenSpells;
-    }
-
-    public void addWrittenSpell(final String name, final int manaCost, final Effect effect) {
-	this.writtenSpells.add(new Spell(name, manaCost, effect));
-    }
 
     public Item() {
 	// Create an empty item to be populated later
 	this.writtenSpells = new ArrayList<>();
     }
 
-    public Item(final Tile tile, final String name, final String appearance) {
-	this.tile = tile;
-	this.name = name;
-	this.appearance = appearance == null ? name : appearance;
+    public Item(final Tile theTile, final String theName, final String theAppearance) {
+	this.tile = theTile;
+	this.name = theName;
+	this.appearance = theAppearance == null ? theName : theAppearance;
 	this.thrownAttackValue = 1;
 	this.writtenSpells = new ArrayList<>();
     }
 
+    public void addWrittenSpell(final String theName, final int manaCost, final Effect effect) {
+	this.writtenSpells.add(new Spell(theName, manaCost, effect));
+    }
+
+    public String appearance() {
+	return this.appearance;
+    }
+
+    public int attackValue() {
+	return this.attackValue;
+    }
+
+    public int defenseValue() {
+	return this.defenseValue;
+    }
+
     public String details() {
-	String details = "";
+	final var details = new StringBuilder();
 	if (this.attackValue != 0) {
-	    details += "  attack:" + this.attackValue;
+	    details.append("  attack:").append(this.attackValue);
 	}
 	if (this.thrownAttackValue != 1) {
-	    details += "  thrown:" + this.thrownAttackValue;
+	    details.append("  thrown:").append(this.thrownAttackValue);
 	}
 	if (this.rangedAttackValue > 0) {
-	    details += "  ranged:" + this.rangedAttackValue;
+	    details.append("  ranged:").append(this.rangedAttackValue);
 	}
 	if (this.defenseValue != 0) {
-	    details += "  defense:" + this.defenseValue;
+	    details.append("  defense:").append(this.defenseValue);
 	}
 	if (this.foodValue != 0) {
-	    details += "  food:" + this.foodValue;
+	    details.append("  food:").append(this.foodValue);
 	}
-	return details;
+	return details.toString();
+    }
+
+    public int foodValue() {
+	return this.foodValue;
     }
 
     public void loadItem(final XMLFileReader reader) throws IOException {
@@ -140,21 +83,53 @@ public class Item {
 	this.defenseValue = reader.readCustomInt("defense");
 	this.thrownAttackValue = reader.readCustomInt("thrown");
 	this.rangedAttackValue = reader.readCustomInt("ranged");
-	boolean effectExists = reader.readCustomBoolean("effectExists");
+	final var effectExists = reader.readCustomBoolean("effectExists");
 	if (effectExists) {
-	    Effect ef = new Effect(this);
+	    final var ef = new Effect(this);
 	    ef.loadEffect(reader);
 	    this.quaffEffect = ef;
 	}
 	reader.readOpeningGroup("spells");
-	int sSize = reader.readCustomInt("count");
-	for (int s = 0; s < sSize; s++) {
-	    Spell sp = new Spell();
+	final var sSize = reader.readCustomInt("count");
+	for (var s = 0; s < sSize; s++) {
+	    final var sp = new Spell();
 	    sp.loadSpell(reader);
 	    this.writtenSpells.add(sp);
 	}
 	reader.readClosingGroup("spells");
 	reader.readClosingGroup("item");
+    }
+
+    public void modifyAttackValue(final int amount) {
+	this.attackValue += amount;
+    }
+
+    public void modifyDefenseValue(final int amount) {
+	this.defenseValue += amount;
+    }
+
+    public void modifyFoodValue(final int amount) {
+	this.foodValue += amount;
+    }
+
+    public void modifyRangedAttackValue(final int amount) {
+	this.rangedAttackValue += amount;
+    }
+
+    public void modifyThrownAttackValue(final int amount) {
+	this.thrownAttackValue += amount;
+    }
+
+    public String name() {
+	return this.name;
+    }
+
+    public Effect quaffEffect() {
+	return this.quaffEffect;
+    }
+
+    public int rangedAttackValue() {
+	return this.rangedAttackValue;
     }
 
     public void saveItem(final XMLFileWriter writer) throws IOException {
@@ -167,19 +142,35 @@ public class Item {
 	writer.writeCustomInt(this.defenseValue, "defense");
 	writer.writeCustomInt(this.thrownAttackValue, "thrown");
 	writer.writeCustomInt(this.rangedAttackValue, "ranged");
-	boolean effectExists = (this.quaffEffect != null);
+	final var effectExists = this.quaffEffect != null;
 	writer.writeCustomBoolean(effectExists, "effectExists");
 	if (effectExists) {
 	    this.quaffEffect.saveEffect(writer);
 	}
 	writer.writeOpeningGroup("spells");
-	int sSize = this.writtenSpells.size();
+	final var sSize = this.writtenSpells.size();
 	writer.writeCustomInt(sSize, "count");
-	for (int s = 0; s < sSize; s++) {
-	    Spell sp = this.writtenSpells.get(s);
+	for (var s = 0; s < sSize; s++) {
+	    final var sp = this.writtenSpells.get(s);
 	    sp.saveSpell(writer);
 	}
 	writer.writeClosingGroup("spells");
 	writer.writeClosingGroup("item");
+    }
+
+    public void setQuaffEffect(final Effect effect) {
+	this.quaffEffect = effect;
+    }
+
+    public int thrownAttackValue() {
+	return this.thrownAttackValue;
+    }
+
+    public Tile tile() {
+	return this.tile;
+    }
+
+    public List<Spell> writtenSpells() {
+	return this.writtenSpells;
     }
 }

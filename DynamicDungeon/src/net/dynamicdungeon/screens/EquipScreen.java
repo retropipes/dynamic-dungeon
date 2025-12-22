@@ -4,8 +4,8 @@ import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.Item;
 
 public class EquipScreen extends InventoryBasedScreen {
-    public EquipScreen(final Creature player) {
-	super(player);
+    public EquipScreen(final Creature thePlayer) {
+	super(thePlayer);
     }
 
     @Override

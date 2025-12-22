@@ -3,8 +3,8 @@ package net.dynamicdungeon.ai;
 import net.dynamicdungeon.Creature;
 
 public class BatAi extends CreatureAi {
-    public BatAi(final Creature creature) {
-	super(creature);
+    public BatAi(final Creature theCreature) {
+	super(theCreature);
     }
 
     @Override

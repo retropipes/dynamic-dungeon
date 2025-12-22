@@ -7,10 +7,10 @@ public class ThrowScreen extends InventoryBasedScreen {
     private final int sx;
     private final int sy;
 
-    public ThrowScreen(final Creature player, final int sx, final int sy) {
-	super(player);
-	this.sx = sx;
-	this.sy = sy;
+    public ThrowScreen(final Creature thePlayer, final int nsx, final int nsy) {
+	super(thePlayer);
+	this.sx = nsx;
+	this.sy = nsy;
     }
 
     @Override

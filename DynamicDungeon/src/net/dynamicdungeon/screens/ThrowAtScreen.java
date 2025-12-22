@@ -8,9 +8,9 @@ import net.dynamicdungeon.Point;
 public class ThrowAtScreen extends TargetBasedScreen {
     private final Item item;
 
-    public ThrowAtScreen(final Creature player, final int sx, final int sy, final Item item) {
-	super(player, "Throw " + player.nameOf(item) + " at?", sx, sy);
-	this.item = item;
+    public ThrowAtScreen(final Creature thePlayer, final int sx, final int sy, final Item theItem) {
+	super(thePlayer, "Throw " + thePlayer.nameOf(theItem) + " at?", sx, sy);
+	this.item = theItem;
     }
 
     @Override

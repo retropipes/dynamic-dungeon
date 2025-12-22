@@ -6,9 +6,10 @@ import net.dynamicdungeon.Spell;
 public class CastSpellScreen extends TargetBasedScreen {
     private final Spell spell;
 
-    public CastSpellScreen(final Creature player, final String caption, final int sx, final int sy, final Spell spell) {
-	super(player, caption, sx, sy);
-	this.spell = spell;
+    public CastSpellScreen(final Creature thePlayer, final String theCaption, final int sx, final int sy,
+	    final Spell theSpell) {
+	super(thePlayer, theCaption, sx, sy);
+	this.spell = theSpell;
     }
 
     @Override

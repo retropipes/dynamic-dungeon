@@ -19,14 +19,14 @@ public class StartScreen implements Screen {
     public void displayOutput(final GuiPanel terminal, final MessagePanel messages) {
 	messages.clear();
 	messages.write("Dynamic Dungeon");
-	//messages.write("-- press [l] to load a saved game --");
+	// messages.write("-- press [l] to load a saved game --");
 	messages.write("-- press [enter] to start --");
     }
 
     @Override
     public Screen respondToUserInput(final KeyEvent key, final MouseEvent mouse) {
 	if (key != null) {
-	    int keyCode = key.getKeyCode();
+	    final var keyCode = key.getKeyCode();
 	    if (keyCode == KeyEvent.VK_ENTER) {
 		return new PlayScreen(true, null);
 	    }
@@ -57,7 +57,6 @@ public class StartScreen implements Screen {
 	}
 	return this;
     }
-
 //    private static String getExtension(final String s) {
 //	String ext = null;
 //	final int i = s.lastIndexOf('.');

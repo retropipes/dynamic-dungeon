@@ -15,9 +15,7 @@ import net.dynamicdungeon.world.Tile;
  * @author Eric Ahnell
  */
 public class GuiPanel extends JPanel {
-    private static final long serialVersionUID = 2L;
-
-    private class GuiPanelState {
+    private static class GuiPanelState {
 	public int cursorX;
 	public int cursorY;
 	public Tile[][][] tiles;
@@ -29,9 +27,9 @@ public class GuiPanel extends JPanel {
 	    this.cursorX = state.cursorX;
 	    this.cursorY = state.cursorY;
 	    this.tiles = new Tile[state.tiles.length][state.tiles[0].length][state.tiles[0][0].length];
-	    for (int x = 0; x < this.tiles.length; x++) {
-		for (int y = 0; y < this.tiles[0].length; y++) {
-		    for (int z = 0; z < this.tiles[0][0].length; z++) {
+	    for (var x = 0; x < this.tiles.length; x++) {
+		for (var y = 0; y < this.tiles[0].length; y++) {
+		    for (var z = 0; z < this.tiles[0][0].length; z++) {
 			this.tiles[x][y][z] = state.tiles[x][y][z];
 		    }
 		}
@@ -39,6 +37,7 @@ public class GuiPanel extends JPanel {
 	}
     }
 
+    private static final long serialVersionUID = 2L;
     private final int widthInTiles;
     private final int heightInTiles;
     private final int tileWidth = Constants.TILE_SIZE_IN_PIXELS;
@@ -48,110 +47,19 @@ public class GuiPanel extends JPanel {
     private final Stack<GuiPanelState> stateStack;
 
     /**
-     * Gets the height, in pixels, of a tile.
-     *
-     * @return
-     */
-    public int getTileHeight() {
-	return this.tileHeight;
-    }
-
-    /**
-     * Gets the width, in pixels, of a tile.
-     *
-     * @return
-     */
-    public int getTileWidth() {
-	return this.tileWidth;
-    }
-
-    /**
-     * Gets the height in tiles.
-     *
-     * @return
-     */
-    public int getHeightInTiles() {
-	return this.heightInTiles;
-    }
-
-    /**
-     * Gets the width in tiles.
-     *
-     * @return
-     */
-    public int getWidthInTiles() {
-	return this.widthInTiles;
-    }
-
-    /**
-     * Gets the distance from the left new tiles will be written to.
-     *
-     * @return
-     */
-    public int getCursorX() {
-	return this.state.cursorX;
-    }
-
-    /**
-     * Sets the distance from the left new tiles will be written to. This should
-     * be equal to or greater than 0 and less than the the width in tiles.
-     *
-     * @param cursorX
-     *            the distance from the left new tiles should be written to
-     */
-    public void setCursorX(final int cursorX) {
-	if (cursorX < 0 || cursorX >= this.widthInTiles) {
-	    throw new IllegalArgumentException(
-		    "cursorX " + cursorX + " must be within range [0," + this.widthInTiles + ").");
-	}
-	this.state.cursorX = cursorX;
-    }
-
-    /**
-     * Gets the distance from the top new tiles will be written to.
-     *
-     * @return
-     */
-    public int getCursorY() {
-	return this.state.cursorY;
-    }
-
-    /**
-     * Sets the distance from the top new tiles will be written to. This should
-     * be equal to or greater than 0 and less than the the height in tiles.
-     *
-     * @param cursorY
-     *            the distance from the top new tiles should be written to
-     */
-    public void setCursorY(final int cursorY) {
-	if (cursorY < 0 || cursorY >= this.heightInTiles) {
-	    throw new IllegalArgumentException(
-		    "cursorY " + cursorY + " must be within range [0," + this.heightInTiles + ").");
-	}
-	this.state.cursorY = cursorY;
-    }
-
-    /**
-     * Sets the x and y position of where new tiles will be written to. The
-     * origin (0,0) is the upper left corner. The x should be equal to or
-     * greater than 0 and less than the the width in tiles. The y should be
-     * equal to or greater than 0 and less than the the height in tiles.
-     *
-     * @param x
-     *            the distance from the left new tiles should be written to
-     * @param y
-     *            the distance from the top new tiles should be written to
-     */
-    public void setCursorPosition(final int x, final int y) {
-	this.setCursorX(x);
-	this.setCursorY(y);
-    }
-
-    /**
      * Class constructor. Default size is 30x18.
      */
     public GuiPanel() {
 	this(Constants.SCREEN_WIDTH_IN_TILES, Constants.SCREEN_HEIGHT_IN_TILES);
+    }
+
+    public GuiPanel(final GuiPanel source) {
+	this.widthInTiles = source.widthInTiles;
+	this.heightInTiles = source.heightInTiles;
+	this.setPreferredSize(source.getPreferredSize());
+	this.state = new GuiPanelState(source.state);
+	this.stateStack = new Stack<>();
+	this.clear();
     }
 
     /**
@@ -161,7 +69,6 @@ public class GuiPanel extends JPanel {
      * @param height
      */
     public GuiPanel(final int width, final int height) {
-	super();
 	if (width < 1) {
 	    throw new IllegalArgumentException("width " + width + " must be greater than 0.");
 	}
@@ -175,45 +82,6 @@ public class GuiPanel extends JPanel {
 	this.state.tiles = new Tile[this.widthInTiles][this.heightInTiles][this.depthInTiles];
 	this.stateStack = new Stack<>();
 	this.clear();
-    }
-
-    public GuiPanel(final GuiPanel source) {
-	super();
-	this.widthInTiles = source.widthInTiles;
-	this.heightInTiles = source.heightInTiles;
-	this.setPreferredSize(source.getPreferredSize());
-	this.state = new GuiPanelState(source.state);
-	this.stateStack = new Stack<>();
-	this.clear();
-    }
-
-    public void pushState() {
-	this.stateStack.push(new GuiPanelState(this.state));
-    }
-
-    public void popState() {
-	if (this.stateStack.isEmpty()) {
-	    throw new IllegalArgumentException("no state to pop. Try calling pushState() first.");
-	}
-	this.state = this.stateStack.pop();
-    }
-
-    /**
-     *
-     * @param g
-     */
-    @Override
-    public void paintComponent(final Graphics g) {
-	for (int x = 0; x < this.widthInTiles; x++) {
-	    for (int y = 0; y < this.heightInTiles; y++) {
-		for (int z = 0; z < this.depthInTiles; z++) {
-		    final BufferedImage img = this.state.tiles[x][y][z];
-		    if (img != null) {
-			g.drawImage(img, x * this.tileWidth, y * this.tileHeight, null);
-		    }
-		}
-	    }
-	}
     }
 
     /**
@@ -230,8 +98,7 @@ public class GuiPanel extends JPanel {
     /**
      * Clear the entire screen with the specified tile.
      *
-     * @param tile
-     *            the tile to write
+     * @param tile the tile to write
      * @return this for convenient chaining of method calls
      */
     public GuiPanel clear(final Tile tile, final int z) {
@@ -241,16 +108,11 @@ public class GuiPanel extends JPanel {
     /**
      * Clear the section of the screen with the specified tile.
      *
-     * @param tile
-     *            the tile to write
-     * @param x
-     *            the distance from the left to begin writing from
-     * @param y
-     *            the distance from the top to begin writing from
-     * @param width
-     *            the height of the section to clear
-     * @param height
-     *            the width of the section to clear
+     * @param tile   the tile to write
+     * @param x      the distance from the left to begin writing from
+     * @param y      the distance from the top to begin writing from
+     * @param width  the height of the section to clear
+     * @param height the width of the section to clear
      * @return this for convenient chaining of method calls
      */
     public GuiPanel clear(final Tile tile, final int x, final int y, final int z, final int width, final int height) {
@@ -274,8 +136,8 @@ public class GuiPanel extends JPanel {
 	    throw new IllegalArgumentException(
 		    "y + height " + (y + height) + " must be less than " + (this.heightInTiles + 1) + ".");
 	}
-	for (int xo = x; xo < x + width; xo++) {
-	    for (int yo = y; yo < y + height; yo++) {
+	for (var xo = x; xo < x + width; xo++) {
+	    for (var yo = y; yo < y + height; yo++) {
 		this.write(tile, xo, yo, z);
 	    }
 	}
@@ -283,11 +145,134 @@ public class GuiPanel extends JPanel {
     }
 
     /**
-     * Write a tile to the cursor's position. This updates the cursor's
-     * position.
+     * Gets the distance from the left new tiles will be written to.
      *
-     * @param tile
-     *            the tile to write
+     * @return
+     */
+    public int getCursorX() {
+	return this.state.cursorX;
+    }
+
+    /**
+     * Gets the distance from the top new tiles will be written to.
+     *
+     * @return
+     */
+    public int getCursorY() {
+	return this.state.cursorY;
+    }
+
+    /**
+     * Gets the height in tiles.
+     *
+     * @return
+     */
+    public int getHeightInTiles() {
+	return this.heightInTiles;
+    }
+
+    /**
+     * Gets the height, in pixels, of a tile.
+     *
+     * @return
+     */
+    public int getTileHeight() {
+	return this.tileHeight;
+    }
+
+    /**
+     * Gets the width, in pixels, of a tile.
+     *
+     * @return
+     */
+    public int getTileWidth() {
+	return this.tileWidth;
+    }
+
+    /**
+     * Gets the width in tiles.
+     *
+     * @return
+     */
+    public int getWidthInTiles() {
+	return this.widthInTiles;
+    }
+
+    /**
+     *
+     * @param g
+     */
+    @Override
+    public void paintComponent(final Graphics g) {
+	for (var x = 0; x < this.widthInTiles; x++) {
+	    for (var y = 0; y < this.heightInTiles; y++) {
+		for (var z = 0; z < this.depthInTiles; z++) {
+		    final BufferedImage img = this.state.tiles[x][y][z];
+		    if (img != null) {
+			g.drawImage(img, x * this.tileWidth, y * this.tileHeight, null);
+		    }
+		}
+	    }
+	}
+    }
+
+    public void popState() {
+	if (this.stateStack.isEmpty()) {
+	    throw new IllegalArgumentException("no state to pop. Try calling pushState() first.");
+	}
+	this.state = this.stateStack.pop();
+    }
+
+    public void pushState() {
+	this.stateStack.push(new GuiPanelState(this.state));
+    }
+
+    /**
+     * Sets the x and y position of where new tiles will be written to. The origin
+     * (0,0) is the upper left corner. The x should be equal to or greater than 0
+     * and less than the the width in tiles. The y should be equal to or greater
+     * than 0 and less than the the height in tiles.
+     *
+     * @param x the distance from the left new tiles should be written to
+     * @param y the distance from the top new tiles should be written to
+     */
+    public void setCursorPosition(final int x, final int y) {
+	this.setCursorX(x);
+	this.setCursorY(y);
+    }
+
+    /**
+     * Sets the distance from the left new tiles will be written to. This should be
+     * equal to or greater than 0 and less than the the width in tiles.
+     *
+     * @param cursorX the distance from the left new tiles should be written to
+     */
+    public void setCursorX(final int cursorX) {
+	if (cursorX < 0 || cursorX >= this.widthInTiles) {
+	    throw new IllegalArgumentException(
+		    "cursorX " + cursorX + " must be within range [0," + this.widthInTiles + ").");
+	}
+	this.state.cursorX = cursorX;
+    }
+
+    /**
+     * Sets the distance from the top new tiles will be written to. This should be
+     * equal to or greater than 0 and less than the the height in tiles.
+     *
+     * @param cursorY the distance from the top new tiles should be written to
+     */
+    public void setCursorY(final int cursorY) {
+	if (cursorY < 0 || cursorY >= this.heightInTiles) {
+	    throw new IllegalArgumentException(
+		    "cursorY " + cursorY + " must be within range [0," + this.heightInTiles + ").");
+	}
+	this.state.cursorY = cursorY;
+    }
+
+    /**
+     * Write a tile to the cursor's position. This updates the cursor's position.
+     *
+     * @param tile the tile to write
      * @return this for convenient chaining of method calls
      */
     public GuiPanel write(final Tile tile, final int z) {
@@ -295,15 +280,11 @@ public class GuiPanel extends JPanel {
     }
 
     /**
-     * Write a tile to the specified position. This updates the cursor's
-     * position.
+     * Write a tile to the specified position. This updates the cursor's position.
      *
-     * @param tile
-     *            the tile to write
-     * @param x
-     *            the distance from the left to begin writing from
-     * @param y
-     *            the distance from the top to begin writing from
+     * @param tile the tile to write
+     * @param x    the distance from the left to begin writing from
+     * @param y    the distance from the top to begin writing from
      * @return this for convenient chaining of method calls
      */
     public GuiPanel write(final Tile tile, final int x, final int y, final int z) {

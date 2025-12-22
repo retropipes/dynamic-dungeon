@@ -4,8 +4,8 @@ import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.Item;
 
 public class DropScreen extends InventoryBasedScreen {
-    public DropScreen(final Creature player) {
-	super(player);
+    public DropScreen(final Creature thePlayer) {
+	super(thePlayer);
     }
 
     @Override

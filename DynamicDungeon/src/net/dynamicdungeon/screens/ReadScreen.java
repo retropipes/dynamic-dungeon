@@ -7,10 +7,10 @@ public class ReadScreen extends InventoryBasedScreen {
     private final int sx;
     private final int sy;
 
-    public ReadScreen(final Creature player, final int sx, final int sy) {
-	super(player);
-	this.sx = sx;
-	this.sy = sy;
+    public ReadScreen(final Creature thePlayer, final int nsx, final int nsy) {
+	super(thePlayer);
+	this.sx = nsx;
+	this.sy = nsy;
     }
 
     @Override

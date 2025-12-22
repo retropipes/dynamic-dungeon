@@ -1,47 +1,25 @@
 package net.dynamicdungeon.fileio;
 
 public class FilenameChecker {
-    // Private constructor
-    private FilenameChecker() {
-	// Do nothing
-    }
-
     public static boolean isFilenameOK(final String filename) {
-	if (filename.contains("/")) {
+	if (filename.contains("/") || filename.contains("?") || filename.contains("<") || filename.contains(">")) {
 	    return false;
 	}
-	if (filename.contains("?")) {
-	    return false;
-	}
-	if (filename.contains("<")) {
-	    return false;
-	}
-	if (filename.contains(">")) {
-	    return false;
-	}
-	if (filename.contains("\\")) {
-	    return false;
-	}
-	if (filename.contains(":")) {
-	    return false;
-	}
-	if (filename.contains("*")) {
-	    return false;
-	}
-	if (filename.contains("|")) {
+	if (filename.contains("\\") || filename.contains(":") || filename.contains("*") || filename.contains("|")) {
 	    return false;
 	}
 	if (filename.contains("\"")) {
 	    return false;
 	}
-	if (filename.equals("con")) {
+	switch (filename) {
+	case "con":
 	    return false;
-	}
-	if (filename.equals("nul")) {
+	case "nul":
 	    return false;
-	}
-	if (filename.equals("prn")) {
+	case "prn":
 	    return false;
+	default:
+	    break;
 	}
 	if (filename.length() == 4 && filename.matches("com[1-9]")) {
 	    return false;
@@ -50,5 +28,10 @@ public class FilenameChecker {
 	    return false;
 	}
 	return true;
+    }
+
+    // Private constructor
+    private FilenameChecker() {
+	// Do nothing
     }
 }

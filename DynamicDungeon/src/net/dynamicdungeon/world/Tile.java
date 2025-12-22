@@ -44,32 +44,8 @@ public class Tile extends BufferedImage {
     public static final Tile BREAD = new Tile("/assets/images/items/bread.png", "Some bread!", '2');
     public static Tile PLAYER = new Tile("/assets/images/characters/player.png", "This is you!", 'P');
     private static Hashtable<Character, Tile> symbolMap;
-    private final String description;
-    private final char stateSymbol;
 
-    Tile(final String description) {
-	super(Constants.TILE_SIZE_IN_PIXELS, Constants.TILE_SIZE_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
-	this.description = description;
-	this.stateSymbol = ' ';
-    }
-
-    Tile(final String assetPath, final String description, final char symbol) {
-	super(Constants.TILE_SIZE_IN_PIXELS, Constants.TILE_SIZE_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
-	this.description = description;
-	this.stateSymbol = symbol;
-	try {
-	    final BufferedImage data = ImageIO.read(Tile.class.getResource(assetPath));
-	    this.getGraphics().drawImage(data, 0, 0, null);
-	} catch (final IOException ioe) {
-	    System.err.println("Image loading failed for: " + assetPath);
-	}
-    }
-
-    public char getStateSymbol() {
-	return this.stateSymbol;
-    }
-
-    public static Tile getFromSymbol(char symbol) {
+    public static Tile getFromSymbol(final char symbol) {
 	if (Tile.symbolMap == null) {
 	    Tile.symbolMap = new Hashtable<>();
 	    Tile.symbolMap.put('F', Tile.FLOOR);
@@ -101,15 +77,40 @@ public class Tile extends BufferedImage {
 	return Tile.symbolMap.get(symbol);
     }
 
+    private final String description;
+    private final char stateSymbol;
+
+    Tile(final String theDescription) {
+	super(Constants.TILE_SIZE_IN_PIXELS, Constants.TILE_SIZE_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
+	this.description = theDescription;
+	this.stateSymbol = ' ';
+    }
+
+    Tile(final String assetPath, final String theDescription, final char symbol) {
+	super(Constants.TILE_SIZE_IN_PIXELS, Constants.TILE_SIZE_IN_PIXELS, BufferedImage.TYPE_INT_ARGB);
+	this.description = theDescription;
+	this.stateSymbol = symbol;
+	try {
+	    final var data = ImageIO.read(Tile.class.getResource(assetPath));
+	    this.getGraphics().drawImage(data, 0, 0, null);
+	} catch (final IOException ioe) {
+	    System.err.println("Image loading failed for: " + assetPath);
+	}
+    }
+
     public String details() {
 	return this.description;
     }
 
-    public boolean isGround() {
-	return this != Tile.WALL && this != Tile.BOUNDS;
+    public char getStateSymbol() {
+	return this.stateSymbol;
     }
 
     public boolean isDiggable() {
 	return this == Tile.WALL;
+    }
+
+    public boolean isGround() {
+	return this != Tile.WALL && this != Tile.BOUNDS;
     }
 }

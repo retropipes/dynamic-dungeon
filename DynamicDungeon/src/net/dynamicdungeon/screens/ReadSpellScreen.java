@@ -17,17 +17,17 @@ public class ReadSpellScreen implements Screen {
     private final int sx;
     private final int sy;
 
-    public ReadSpellScreen(final Creature player, final int sx, final int sy, final Item item) {
-	this.player = player;
+    public ReadSpellScreen(final Creature thePlayer, final int nsx, final int nsy, final Item theItem) {
+	this.player = thePlayer;
 	this.letters = "abcdefghijklmnopqrstuvwxyz";
-	this.item = item;
-	this.sx = sx;
-	this.sy = sy;
+	this.item = theItem;
+	this.sx = nsx;
+	this.sy = nsy;
     }
 
     @Override
     public void displayOutput(final GuiPanel terminal, final MessagePanel messages) {
-	final ArrayList<String> lines = this.getList();
+	final var lines = this.getList();
 	for (final String line : lines) {
 	    messages.write(line);
 	}
@@ -35,10 +35,10 @@ public class ReadSpellScreen implements Screen {
     }
 
     private ArrayList<String> getList() {
-	final ArrayList<String> lines = new ArrayList<>();
-	for (int i = 0; i < this.item.writtenSpells().size(); i++) {
-	    final Spell spell = this.item.writtenSpells().get(i);
-	    final String line = this.letters.charAt(i) + " - " + spell.name() + " (" + spell.manaCost() + " mana)";
+	final var lines = new ArrayList<String>();
+	for (var i = 0; i < this.item.writtenSpells().size(); i++) {
+	    final var spell = this.item.writtenSpells().get(i);
+	    final var line = this.letters.charAt(i) + " - " + spell.name() + " (" + spell.manaCost() + " mana)";
 	    lines.add(line);
 	}
 	return lines;
@@ -46,20 +46,19 @@ public class ReadSpellScreen implements Screen {
 
     @Override
     public Screen respondToUserInput(final KeyEvent key, final MouseEvent mouse) {
-	if (key != null) {
-	    final char c = key.getKeyChar();
-	    final Item[] items = this.player.inventory().getItems();
-	    if (this.letters.indexOf(c) > -1 && items.length > this.letters.indexOf(c)
-		    && items[this.letters.indexOf(c)] != null) {
-		return this.use(this.item.writtenSpells().get(this.letters.indexOf(c)));
-	    } else if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
-		return null;
-	    } else {
-		return this;
-	    }
-	} else {
+	if (key == null) {
 	    return this;
 	}
+	final var c = key.getKeyChar();
+	final var items = this.player.inventory().getItems();
+	if (this.letters.indexOf(c) > -1 && items.length > this.letters.indexOf(c)
+		&& items[this.letters.indexOf(c)] != null) {
+	    return this.use(this.item.writtenSpells().get(this.letters.indexOf(c)));
+	}
+	if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
+	    return null;
+	}
+	return this;
     }
 
     protected Screen use(final Spell spell) {

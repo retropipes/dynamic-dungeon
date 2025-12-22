@@ -5,9 +5,9 @@ import net.dynamicdungeon.Creature;
 public class GoblinAi extends CreatureAi {
     private final Creature player;
 
-    public GoblinAi(final Creature creature, final Creature player) {
-	super(creature);
-	this.player = player;
+    public GoblinAi(final Creature theCreature, final Creature thePlayer) {
+	super(theCreature);
+	this.player = thePlayer;
     }
 
     @Override
