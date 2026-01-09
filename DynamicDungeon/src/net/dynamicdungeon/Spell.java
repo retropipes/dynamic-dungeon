@@ -2,8 +2,8 @@ package net.dynamicdungeon;
 
 import java.io.IOException;
 
-import net.dynamicdungeon.fileio.XMLFileReader;
-import net.dynamicdungeon.fileio.XMLFileWriter;
+import org.retropipes.diane.fileio.XDataReader;
+import org.retropipes.diane.fileio.XDataWriter;
 
 public class Spell {
     private String name;
@@ -24,7 +24,7 @@ public class Spell {
 	return new Effect(this.effect);
     }
 
-    public void loadSpell(final XMLFileReader reader) throws IOException {
+    public void loadSpell(final XDataReader reader) throws IOException {
 	reader.readOpeningGroup("spell");
 	this.name = reader.readCustomString("name");
 	this.manaCost = reader.readCustomInt("manaCost");
@@ -46,7 +46,7 @@ public class Spell {
 	return true;
     }
 
-    public void saveSpell(final XMLFileWriter writer) throws IOException {
+    public void saveSpell(final XDataWriter writer) throws IOException {
 	writer.writeOpeningGroup("spell");
 	writer.writeCustomString(this.name, "name");
 	writer.writeCustomInt(this.manaCost, "manaCost");

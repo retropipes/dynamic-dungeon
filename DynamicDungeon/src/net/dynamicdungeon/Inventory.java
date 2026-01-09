@@ -2,8 +2,8 @@ package net.dynamicdungeon;
 
 import java.io.IOException;
 
-import net.dynamicdungeon.fileio.XMLFileReader;
-import net.dynamicdungeon.fileio.XMLFileWriter;
+import org.retropipes.diane.fileio.XDataReader;
+import org.retropipes.diane.fileio.XDataWriter;
 
 public class Inventory {
     private Item[] items;
@@ -52,7 +52,7 @@ public class Inventory {
 	return size == this.items.length;
     }
 
-    public void loadInventory(final XMLFileReader reader) throws IOException {
+    public void loadInventory(final XDataReader reader) throws IOException {
 	reader.readOpeningGroup("inventory");
 	final var iSize = reader.readCustomInt("size");
 	this.items = new Item[iSize];
@@ -76,7 +76,7 @@ public class Inventory {
 	}
     }
 
-    public void saveInventory(final XMLFileWriter writer) throws IOException {
+    public void saveInventory(final XDataWriter writer) throws IOException {
 	writer.writeOpeningGroup("inventory");
 	final var iSize = this.items.length;
 	writer.writeCustomInt(iSize, "size");

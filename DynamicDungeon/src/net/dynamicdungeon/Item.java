@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.dynamicdungeon.fileio.XMLFileReader;
-import net.dynamicdungeon.fileio.XMLFileWriter;
+import org.retropipes.diane.fileio.XDataReader;
+import org.retropipes.diane.fileio.XDataWriter;
+
 import net.dynamicdungeon.world.Tile;
 
 public class Item {
@@ -73,7 +74,7 @@ public class Item {
 	return this.foodValue;
     }
 
-    public void loadItem(final XMLFileReader reader) throws IOException {
+    public void loadItem(final XDataReader reader) throws IOException {
 	reader.readOpeningGroup("item");
 	this.tile = Tile.getFromSymbol(reader.readCustomString("tile").charAt(0));
 	this.name = reader.readCustomString("name");
@@ -132,7 +133,7 @@ public class Item {
 	return this.rangedAttackValue;
     }
 
-    public void saveItem(final XMLFileWriter writer) throws IOException {
+    public void saveItem(final XDataWriter writer) throws IOException {
 	writer.writeOpeningGroup("item");
 	writer.writeCustomString(Character.toString(this.tile.getStateSymbol()), "tile");
 	writer.writeCustomString(this.name, "name");

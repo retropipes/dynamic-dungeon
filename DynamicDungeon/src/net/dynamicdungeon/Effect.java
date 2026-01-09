@@ -2,8 +2,8 @@ package net.dynamicdungeon;
 
 import java.io.IOException;
 
-import net.dynamicdungeon.fileio.XMLFileReader;
-import net.dynamicdungeon.fileio.XMLFileWriter;
+import org.retropipes.diane.fileio.XDataReader;
+import org.retropipes.diane.fileio.XDataWriter;
 
 public final class Effect {
     private static StuffFactory FACTORY;
@@ -109,7 +109,7 @@ public final class Effect {
 	return this.duration < 1;
     }
 
-    public void loadEffect(final XMLFileReader reader) throws IOException {
+    public void loadEffect(final XDataReader reader) throws IOException {
 	reader.readOpeningGroup("effect");
 	this.duration = reader.readCustomInt("duration");
 	this.attackModifier = reader.readCustomInt("attackModifier");
@@ -138,7 +138,7 @@ public final class Effect {
 	reader.readClosingGroup("effect");
     }
 
-    public void saveEffect(final XMLFileWriter writer) throws IOException {
+    public void saveEffect(final XDataWriter writer) throws IOException {
 	writer.writeOpeningGroup("effect");
 	writer.writeCustomInt(this.duration, "duration");
 	writer.writeCustomInt(this.attackModifier, "attackModifier");

@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.retropipes.diane.fileio.XDataReader;
+import org.retropipes.diane.fileio.XDataWriter;
+
 import net.dynamicdungeon.ai.CreatureAi;
-import net.dynamicdungeon.fileio.XMLFileReader;
-import net.dynamicdungeon.fileio.XMLFileWriter;
 import net.dynamicdungeon.sound.Sound;
 import net.dynamicdungeon.world.Tile;
 import net.dynamicdungeon.world.World;
@@ -337,7 +338,7 @@ public class Creature {
 	return this.level;
     }
 
-    public void loadCreature(final XMLFileReader reader) throws IOException {
+    public void loadCreature(final XDataReader reader) throws IOException {
 	reader.readOpeningGroup("creature");
 	this.tile = Tile.getFromSymbol(reader.readCustomString("tile").charAt(0));
 	this.name = reader.readCustomString("name");
@@ -601,7 +602,7 @@ public class Creature {
 	}
     }
 
-    public void saveCreature(final XMLFileWriter writer) throws IOException {
+    public void saveCreature(final XDataWriter writer) throws IOException {
 	writer.writeOpeningGroup("creature");
 	writer.writeCustomString(Character.toString(this.tile.getStateSymbol()), "tile");
 	writer.writeCustomString(this.name, "name");

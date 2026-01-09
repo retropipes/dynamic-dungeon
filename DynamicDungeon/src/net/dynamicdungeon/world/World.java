@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.retropipes.diane.fileio.XDataReader;
+import org.retropipes.diane.fileio.XDataWriter;
+
 import net.dynamicdungeon.Creature;
 import net.dynamicdungeon.Item;
 import net.dynamicdungeon.Point;
-import net.dynamicdungeon.fileio.XMLFileReader;
-import net.dynamicdungeon.fileio.XMLFileWriter;
 
 public class World {
     private Tile[][][] tiles;
@@ -114,7 +115,7 @@ public class World {
 	return this.items[x][y][z];
     }
 
-    private void loadCreatures(final XMLFileReader reader) throws IOException {
+    private void loadCreatures(final XDataReader reader) throws IOException {
 	reader.readOpeningGroup("creatures");
 	final var cSize = reader.readCustomInt("size");
 	for (var c = 0; c < cSize; c++) {
@@ -125,7 +126,7 @@ public class World {
 	reader.readClosingGroup("creatures");
     }
 
-    private void loadItems(final XMLFileReader reader) throws IOException {
+    private void loadItems(final XDataReader reader) throws IOException {
 	reader.readOpeningGroup("items");
 	this.items = new Item[this.width][this.height][this.depth];
 	for (var z = 0; z < this.depth; z++) {
@@ -143,7 +144,7 @@ public class World {
 	reader.readClosingGroup("items");
     }
 
-    private void loadTiles(final XMLFileReader reader) throws IOException {
+    private void loadTiles(final XDataReader reader) throws IOException {
 	reader.readOpeningGroup("tiles");
 	reader.readOpeningGroup("size");
 	this.width = reader.readCustomInt("width");
@@ -164,7 +165,7 @@ public class World {
 	reader.readClosingGroup("tiles");
     }
 
-    public void loadWorld(final XMLFileReader reader) throws IOException {
+    public void loadWorld(final XDataReader reader) throws IOException {
 	reader.readOpeningGroup("world");
 	this.loadTiles(reader);
 	this.loadItems(reader);
@@ -193,7 +194,7 @@ public class World {
 	}
     }
 
-    private void saveCreatures(final XMLFileWriter writer) throws IOException {
+    private void saveCreatures(final XDataWriter writer) throws IOException {
 	writer.writeOpeningGroup("creatures");
 	final var cSize = this.creatures.size();
 	writer.writeCustomInt(cSize, "size");
@@ -205,7 +206,7 @@ public class World {
 	writer.writeClosingGroup("creatures");
     }
 
-    private void saveItems(final XMLFileWriter writer) throws IOException {
+    private void saveItems(final XDataWriter writer) throws IOException {
 	writer.writeOpeningGroup("items");
 	for (var z = 0; z < this.depth; z++) {
 	    for (var y = 0; y < this.height; y++) {
@@ -222,7 +223,7 @@ public class World {
 	writer.writeClosingGroup("items");
     }
 
-    private void saveTiles(final XMLFileWriter writer) throws IOException {
+    private void saveTiles(final XDataWriter writer) throws IOException {
 	writer.writeOpeningGroup("tiles");
 	writer.writeOpeningGroup("size");
 	writer.writeCustomInt(this.width, "width");
@@ -247,7 +248,7 @@ public class World {
 	writer.writeClosingGroup("tiles");
     }
 
-    public void saveWorld(final XMLFileWriter writer) throws IOException {
+    public void saveWorld(final XDataWriter writer) throws IOException {
 	writer.writeOpeningGroup("world");
 	this.saveTiles(writer);
 	this.saveItems(writer);
